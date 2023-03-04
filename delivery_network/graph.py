@@ -84,7 +84,7 @@ class Graph:
         return None
     
     #complexité en O(V+E)
-    
+
 
     def connected_components(self):
         visited = set()
@@ -163,4 +163,4 @@ def graph_from_file(filename):
 
 G = graph_from_file("input/network.00.in")
 print(G)
-#print(G.connected_components(), G.connected_components_set())
+print(G.connected_components(), G.connected_components_set())
