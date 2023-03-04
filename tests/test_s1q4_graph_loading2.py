@@ -2,7 +2,7 @@
 import sys 
 sys.path.append("delivery_network")
 
-from Mathieu import Graph, graph_from_file
+from graph import Graph, graph_from_file
 
 import unittest   # The test framework
 class Test_GraphLoading2(unittest.TestCase):
