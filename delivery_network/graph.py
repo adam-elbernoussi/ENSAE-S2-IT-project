@@ -119,7 +119,23 @@ class Graph:
         """
         Should return path, min_power. 
         """
-        raise NotImplementedError
+        #Using binary research
+
+        ############################################# 
+        # est-ce plus opti de commencer par chercher l'arrête la plus lourde ?
+        ############################################# 
+
+        a = 0
+        b = 1
+        while self.get_path_with_power(src, dest, b) == None:
+            a = b
+            b *= 2
+        while (b-a) >= 1:
+            if self.get_path_with_power(src, dest, (a+b)/2) != None:
+                b = (a+b)/2
+            else : 
+                a = (a+b)/2
+        return self.get_path_with_power(src, dest, int(b)), int(b)      #assumed here that power is always an integer 
 
 
 def graph_from_file(filename):
