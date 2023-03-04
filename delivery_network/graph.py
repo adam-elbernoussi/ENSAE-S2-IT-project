@@ -70,7 +70,20 @@ class Graph:
     
 
     def get_path_with_power(self, src, dest, power):
-        raise NotImplementedError
+        visited = set()
+        stack = [(src, [], 0)]  # (node, path, total power)
+        while stack:
+            node, path, total_power = stack.pop()
+            if node == dest and total_power <=power:
+                return path + [dest]
+            if node not in visited:
+                visited.add(node)
+                for neighbor, min_power, _ in self.graph[node]:
+                    if min_power <= power and neighbor not in visited:
+                        stack.append((neighbor, path + [node], max(min_power, total_power)))
+        return None
+    
+    #complexité en O(V+E)
     
 
     def connected_components(self):
@@ -82,6 +95,17 @@ class Graph:
                 self._dfs(node, visited, component)
                 components.append(component)
         return components
+
+    def _dfs(self, node, visited, component):
+        """
+        Depth-first search implementation used by the connected_components method.
+        As indicated in the guideline
+        """
+        visited.add(node)
+        component.append(node)
+        for neighbor, _, _ in self.graph[node]:
+            if neighbor not in visited:
+                self._dfs(neighbor, visited, component)
 
 
     def connected_components_set(self):
