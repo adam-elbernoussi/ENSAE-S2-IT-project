@@ -136,6 +136,12 @@ class Graph:
             else : 
                 a = (a+b)/2
         return self.get_path_with_power(src, dest, int(b)), int(b)      #assumed here that power is always an integer 
+    
+    def view(self):
+        raise Exception("pas fini")
+
+
+
 
 
 def graph_from_file(filename):
@@ -172,6 +178,7 @@ def graph_from_file(filename):
             else:
                 raise Exception("Format incorrect")
     return g
+
 
 ####################################################################################################################################################################################
 #                   test
