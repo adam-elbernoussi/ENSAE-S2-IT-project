@@ -1,0 +1,8 @@
+graph {
+	graph [concentrate=True]
+	A
+	B
+	L
+	B -- L [weight=1]
+	A -- L [label=rrr]
+}

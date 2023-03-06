@@ -137,15 +137,18 @@ class Graph:
                 a = (a+b)/2
         return self.get_path_with_power(src, dest, int(b)), int(b)      #assumed here that power is always an integer 
     
-    def view(self):
+    def view(self, node1 = None, node2 = None):
         import graphviz
-        dot = graphviz.Graph('Graph', comment='Graph visualisation')
+        dot = graphviz.Graph('Graph', comment='Graph visualisation', graph_attr = {"concentrate" : 'True'})
         for i in self.nodes:
             dot.node('{}'.format(i))  
         for i in self.graph:
             for j in self.graph[i]: #we can probably optimize/clarify this double for loop
-                dot.edge('{}'.format(i), '{}'.format(j[0]), constraint='True', weight = "{}".format(j[1]), ) 
-        dot.render(directory='graph_viz_output', view=True)
+                dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}; length = {}".format(j[1], j[2])) 
+        if ((node1 != None) and (node2 != None)):
+            dot.render(directory='graph_viz_output', view=True)
+        else:
+            dot.render(directory='graph_viz_output', view=True)
 
 
 
@@ -195,4 +198,12 @@ G = graph_from_file("input/network.00.in")
 print(G)
 print(G.connected_components(), G.connected_components_set())
 G.view()
-#dot.edge('B', 'L', constraint='false')
+
+import graphviz
+dot = graphviz.Graph(graph_attr = {'concentrate' : 'True'})
+dot.node('A')
+dot.node('B')
+dot.node('L')
+dot.edge('B', 'L', weight = "1")
+dot.edge('A', 'L', label = "rrr")
+dot.view()
