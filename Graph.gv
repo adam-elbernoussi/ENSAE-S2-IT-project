@@ -1,8 +1,5 @@
 graph {
-	graph [concentrate=True]
-	A
-	B
-	L
-	B -- L [weight=30]
-	A -- L [label=rrr]
+	a
+	a -- b
+	b
 }

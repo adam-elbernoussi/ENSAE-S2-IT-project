@@ -141,17 +141,25 @@ class Graph:
         import graphviz
         dot = graphviz.Graph('Graph', comment='Graph visualisation', graph_attr = {"concentrate" : 'True'})
         verified_edge = []
-        for i in self.nodes:
-            dot.node('{}'.format(i))  
-        for i in self.graph:
-            for j in self.graph[i]: #we can probably optimize/clarify this double for loop
-                if {i, j[0]} not in verified_edge:
-                    dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
-                    verified_edge.append({i, j[0]})
-                    print(verified_edge)
         if ((node1 != None) and (node2 != None)):
+            path, _ = self.min_power(node1, node2)
+            for i in self.graph:
+                if i in path:
+                    dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
+                for j in self.graph[i]: #we can probably optimize/clarify this double for loop
+                    if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] in path):
+                        dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]), color = 'red')
+                        verified_edge.append({i, j[0]})
+                    elif {i, j[0]} not in verified_edge:
+                        dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
+                        verified_edge.append({i, j[0]})
             dot.render(directory='graph_viz_output', view=True)
-        else:
+        else: 
+            for i in self.graph:
+                for j in self.graph[i]: #we can probably optimize/clarify this double for loop
+                    if {i, j[0]} not in verified_edge:
+                        dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
+                        verified_edge.append({i, j[0]})
             dot.render(directory='graph_viz_output', view=True)
 
 
@@ -200,6 +208,8 @@ def graph_from_file(filename):
 
 G = graph_from_file("input/network.00.in")
 print(G)
-print(G.connected_components(), G.connected_components_set())
+print(G.min_power(1, 3), G.connected_components_set())
 G.view()
+
+
 
