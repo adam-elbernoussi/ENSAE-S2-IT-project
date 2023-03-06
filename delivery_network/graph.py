@@ -187,3 +187,17 @@ def graph_from_file(filename):
 G = graph_from_file("input/network.00.in")
 print(G)
 print(G.connected_components(), G.connected_components_set())
+
+#import graphviz
+import pydotplus
+from graphviz import Digraph
+dot = graphviz.Digraph('round-table', comment='The Round Table')  
+
+dot.node('A', 'King Arthur')  
+dot.node('B', 'Sir Bedevere the Wise')
+dot.node('L', 'Sir Lancelot the Brave')
+
+dot.edges(['AB', 'AL'])
+dot.edge('B', 'L', constraint='false')
+
+dot.render(directory='doctest-output', view=True)
