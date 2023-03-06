@@ -1,31 +1,31 @@
 // Graph visualisation
 graph "Graph" {
-	1 [label=1]
-	2 [label=2]
-	3 [label=3]
-	4 [label=4]
-	5 [label=5]
-	6 [label=6]
-	7 [label=7]
-	8 [label=8]
-	9 [label=9]
-	10 [label=10]
-	1 -- 2 [constraint=True]
-	1 -- 6 [constraint=True]
-	1 -- 8 [constraint=True]
-	2 -- 1 [constraint=True]
-	2 -- 3 [constraint=True]
-	2 -- 5 [constraint=True]
-	3 -- 2 [constraint=True]
-	3 -- 4 [constraint=True]
-	4 -- 3 [constraint=True]
-	4 -- 10 [constraint=True]
-	5 -- 2 [constraint=True]
-	5 -- 7 [constraint=True]
-	6 -- 1 [constraint=True]
-	7 -- 5 [constraint=True]
-	8 -- 1 [constraint=True]
-	8 -- 9 [constraint=True]
-	9 -- 8 [constraint=True]
-	10 -- 4 [constraint=True]
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+	1 -- 2 [constraint=True weight=11]
+	1 -- 6 [constraint=True weight=12]
+	1 -- 8 [constraint=True weight=0]
+	2 -- 1 [constraint=True weight=11]
+	2 -- 3 [constraint=True weight=10]
+	2 -- 5 [constraint=True weight=4]
+	3 -- 2 [constraint=True weight=10]
+	3 -- 4 [constraint=True weight=4]
+	4 -- 3 [constraint=True weight=4]
+	4 -- 10 [constraint=True weight=4]
+	5 -- 2 [constraint=True weight=4]
+	5 -- 7 [constraint=True weight=14]
+	6 -- 1 [constraint=True weight=12]
+	7 -- 5 [constraint=True weight=14]
+	8 -- 1 [constraint=True weight=0]
+	8 -- 9 [constraint=True weight=14]
+	9 -- 8 [constraint=True weight=14]
+	10 -- 4 [constraint=True weight=4]
 }
