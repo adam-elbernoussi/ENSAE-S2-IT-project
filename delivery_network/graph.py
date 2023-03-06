@@ -124,18 +124,24 @@ class Graph:
         ############################################# 
         # est-ce plus opti de commencer par chercher l'arrête la plus lourde ?
         ############################################# 
-
-        a = 0
-        b = 1
-        while self.get_path_with_power(src, dest, b) == None:
-            a = b
-            b *= 2
-        while (b-a) >= 1:
-            if self.get_path_with_power(src, dest, (a+b)/2) != None:
-                b = (a+b)/2
-            else : 
-                a = (a+b)/2
-        return self.get_path_with_power(src, dest, int(b)), int(b)      #assumed here that power is always an integer 
+        
+        src_dest_same_connected_component = False
+        for a in self.connected_components_set():
+            if {src, dest} < a:
+                src_dest_same_connected_component = True
+        if src_dest_same_connected_component:
+            a = 0
+            b = 1
+            while self.get_path_with_power(src, dest, b) == None:
+                a = b
+                b *= 2
+            while (b-a) >= 1:
+                if self.get_path_with_power(src, dest, (a+b)/2) != None:
+                    b = (a+b)/2
+                else : 
+                    a = (a+b)/2
+            return self.get_path_with_power(src, dest, int(b)), int(b)      #assumed here that power is always an integer 
+        raise ValueError("The two given nodes are not in the same connected component")
     
     def view(self, node1 = None, node2 = None):
         import graphviz
