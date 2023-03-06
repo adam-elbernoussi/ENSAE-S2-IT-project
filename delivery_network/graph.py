@@ -146,6 +146,25 @@ class Graph:
         raise ValueError("The two given nodes are not in the same connected component.")
     
     def view(self, node1 = None, node2 = None):
+        """
+        This function allow a visualisation of a graph
+
+        Actually this function takes 2 nodes of the graph and display the entire graph with
+        the shortest path between the two nodes in red
+        If the function does not recieve two nodes it will simply display the graph
+        The function automatically save the Graph in the file ../graph_viz_output
+
+        Parameters:
+        -----------
+        node1 : NodeType
+            A node of the graph
+        node2 : NodeType
+            Another node of the graph
+        
+        Outputs:
+        -----------
+        None
+        """
         import graphviz
         dot = graphviz.Graph('Graph', comment='Graph visualisation', graph_attr = {"concentrate" : 'True'})
         verified_edge = []
