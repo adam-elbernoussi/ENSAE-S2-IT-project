@@ -139,15 +139,13 @@ class Graph:
     
     def view(self):
         import graphviz
-        dot = graphviz.Digraph('Graph', comment='Graph visualisation')
+        dot = graphviz.Graph('Graph', comment='Graph visualisation')
         for i in self.nodes:
             dot.node('{}'.format(i), '{}'.format(i))  
         for i in self.graph:
             for j in self.graph[i]: #we can probably optimize/clarify this double for loop
-                dot.edge('{}'.format(i), '{}'.format(j[0]), constraint='false') 
-        #dot.render(directory='graph_viz_output', view=False)
-        return dot.view()
-        raise Exception("pas fini")
+                dot.edge('{}'.format(i), '{}'.format(j[0]), constraint='True') 
+        dot.render(directory='graph_viz_output', view=True)
 
 
 
