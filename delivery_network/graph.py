@@ -139,7 +139,11 @@ class Graph:
     
     def view(self):
         import graphviz
-        dot = graphviz.Digraph('Graph', comment='Graph vizualisation')  
+        dot = graphviz.Digraph('Graph', comment='Graph visualisation')
+        for i in self.nodes:
+            dot.node('{}'.format(i), '{}'.format(i))  
+        #dot.render(directory='graph_viz_output', view=False)
+        return dot
         raise Exception("pas fini")
 
 
@@ -189,6 +193,7 @@ def graph_from_file(filename):
 G = graph_from_file("input/network.00.in")
 print(G)
 print(G.connected_components(), G.connected_components_set())
+G.view()
 
 import graphviz
 dot = graphviz.Digraph('round-table', comment='The Round Table')  
@@ -200,5 +205,5 @@ dot.node('L', 'Sir Lancelot the Brave')
 dot.edges(['AB', 'AL'])
 dot.edge('B', 'L', constraint='false')
 
-
-dot.view()
+#dot.render(directory='graph_viz_output', view=True)
+dot
