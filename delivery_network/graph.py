@@ -138,6 +138,8 @@ class Graph:
         return self.get_path_with_power(src, dest, int(b)), int(b)      #assumed here that power is always an integer 
     
     def view(self):
+        import graphviz
+        dot = graphviz.Digraph('Graph', comment='Graph vizualisation')  
         raise Exception("pas fini")
 
 
@@ -198,4 +200,5 @@ dot.node('L', 'Sir Lancelot the Brave')
 dot.edges(['AB', 'AL'])
 dot.edge('B', 'L', constraint='false')
 
-dot.render(directory='doctest-output', view=True)
+
+dot.view()
