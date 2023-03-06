@@ -142,8 +142,11 @@ class Graph:
         dot = graphviz.Digraph('Graph', comment='Graph visualisation')
         for i in self.nodes:
             dot.node('{}'.format(i), '{}'.format(i))  
+        for i in self.graph:
+            for j in self.graph[i]: #we can probably optimize/clarify this double for loop
+                dot.edge('{}'.format(i), '{}'.format(j[0]), constraint='false') 
         #dot.render(directory='graph_viz_output', view=False)
-        return dot
+        return dot.view()
         raise Exception("pas fini")
 
 
@@ -194,16 +197,4 @@ G = graph_from_file("input/network.00.in")
 print(G)
 print(G.connected_components(), G.connected_components_set())
 G.view()
-
-import graphviz
-dot = graphviz.Digraph('round-table', comment='The Round Table')  
-
-dot.node('A', 'King Arthur')  
-dot.node('B', 'Sir Bedevere the Wise')
-dot.node('L', 'Sir Lancelot the Brave')
-
-dot.edges(['AB', 'AL'])
-dot.edge('B', 'L', constraint='false')
-
-#dot.render(directory='graph_viz_output', view=True)
-dot
+#dot.edge('B', 'L', constraint='false')
