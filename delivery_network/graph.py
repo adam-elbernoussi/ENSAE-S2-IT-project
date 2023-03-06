@@ -125,10 +125,12 @@ class Graph:
         # est-ce plus opti de commencer par chercher l'arrête la plus lourde ?
         ############################################# 
         
+        #This part is for security : avoid the case where hte while loop goes infinite
         src_dest_same_connected_component = False
         for a in self.connected_components_set():
             if {src, dest} < a:
                 src_dest_same_connected_component = True
+        #From this point it is the real function
         if src_dest_same_connected_component:
             a = 0
             b = 1
@@ -140,8 +142,8 @@ class Graph:
                     b = (a+b)/2
                 else : 
                     a = (a+b)/2
-            return self.get_path_with_power(src, dest, int(b)), int(b)      #assumed here that power is always an integer 
-        raise ValueError("The two given nodes are not in the same connected component")
+            return self.get_path_with_power(src, dest, int(b)), int(b)     #assumed here that power is always an integer 
+        raise ValueError("The two given nodes are not in the same connected component.")
     
     def view(self, node1 = None, node2 = None):
         import graphviz
@@ -155,6 +157,7 @@ class Graph:
                 for j in self.graph[i]: #we can probably optimize/clarify this double for loop
                     if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] in path):
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]), color = 'red')
+                        #Actually the method Graphviz.edge automatically create the node
                         verified_edge.append({i, j[0]})
                     elif {i, j[0]} not in verified_edge:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
@@ -215,7 +218,7 @@ def graph_from_file(filename):
 G = graph_from_file("input/network.01.in")
 print(G)
 print(G.min_power(1, 3), G.connected_components_set())
-G.view(1,3)
+G.view(1, 3)
 
 
 
