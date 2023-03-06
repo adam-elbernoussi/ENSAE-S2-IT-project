@@ -188,9 +188,7 @@ G = graph_from_file("input/network.00.in")
 print(G)
 print(G.connected_components(), G.connected_components_set())
 
-#import graphviz
-import pydotplus
-from graphviz import Digraph
+import graphviz
 dot = graphviz.Digraph('round-table', comment='The Round Table')  
 
 dot.node('A', 'King Arthur')  
