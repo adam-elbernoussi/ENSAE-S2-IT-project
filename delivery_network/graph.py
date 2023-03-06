@@ -140,11 +140,15 @@ class Graph:
     def view(self, node1 = None, node2 = None):
         import graphviz
         dot = graphviz.Graph('Graph', comment='Graph visualisation', graph_attr = {"concentrate" : 'True'})
+        verified_edge = []
         for i in self.nodes:
             dot.node('{}'.format(i))  
         for i in self.graph:
             for j in self.graph[i]: #we can probably optimize/clarify this double for loop
-                dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}; length = {}".format(j[1], j[2])) 
+                if {i, j[0]} not in verified_edge:
+                    dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
+                    verified_edge.append({i, j[0]})
+                    print(verified_edge)
         if ((node1 != None) and (node2 != None)):
             dot.render(directory='graph_viz_output', view=True)
         else:
@@ -199,11 +203,3 @@ print(G)
 print(G.connected_components(), G.connected_components_set())
 G.view()
 
-import graphviz
-dot = graphviz.Graph(graph_attr = {'concentrate' : 'True'})
-dot.node('A')
-dot.node('B')
-dot.node('L')
-dot.edge('B', 'L', weight = "1")
-dot.edge('A', 'L', label = "rrr")
-dot.view()

@@ -3,6 +3,6 @@ graph {
 	A
 	B
 	L
-	B -- L [weight=1]
+	B -- L [weight=30]
 	A -- L [label=rrr]
 }

@@ -11,22 +11,22 @@ graph "Graph" {
 	8
 	9
 	10
-	1 -- 2 [label="length = 1; weight = 11" weight=11]
-	1 -- 6 [label="length = 1; weight = 12" weight=12]
-	1 -- 8 [label="length = 1; weight = 0" weight=0]
-	2 -- 1 [label="length = 1; weight = 11" weight=11]
-	2 -- 3 [label="length = 1; weight = 10" weight=10]
-	2 -- 5 [label="length = 1; weight = 4" weight=4]
-	3 -- 2 [label="length = 1; weight = 10" weight=10]
-	3 -- 4 [label="length = 1; weight = 4" weight=4]
-	4 -- 3 [label="length = 1; weight = 4" weight=4]
-	4 -- 10 [label="length = 1; weight = 4" weight=4]
-	5 -- 2 [label="length = 1; weight = 4" weight=4]
-	5 -- 7 [label="length = 1; weight = 14" weight=14]
-	6 -- 1 [label="length = 1; weight = 12" weight=12]
-	7 -- 5 [label="length = 1; weight = 14" weight=14]
-	8 -- 1 [label="length = 1; weight = 0" weight=0]
-	8 -- 9 [label="length = 1; weight = 14" weight=14]
-	9 -- 8 [label="length = 1; weight = 14" weight=14]
-	10 -- 4 [label="length = 1; weight = 4" weight=4]
+	1 -- 2 [label="weight = 11
+ length = 1" weight=11]
+	1 -- 6 [label="weight = 12
+ length = 1" weight=12]
+	1 -- 8 [label="weight = 0
+ length = 1" weight=0]
+	2 -- 3 [label="weight = 10
+ length = 1" weight=10]
+	2 -- 5 [label="weight = 4
+ length = 1" weight=4]
+	3 -- 4 [label="weight = 4
+ length = 1" weight=4]
+	4 -- 10 [label="weight = 4
+ length = 1" weight=4]
+	5 -- 7 [label="weight = 14
+ length = 1" weight=14]
+	8 -- 9 [label="weight = 14
+ length = 1" weight=14]
 }
