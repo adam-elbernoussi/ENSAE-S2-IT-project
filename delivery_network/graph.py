@@ -234,9 +234,9 @@ def graph_from_file(filename):
 #                   test
 ####################################################################################################################################################################################
 
-G = graph_from_file("input/network.01.in")
-print(G)
-print(G.min_power(1, 3), G.connected_components_set())
-G.view(1, 3)
+G = graph_from_file("input/network.1.in")
+#print(G)
+#print(G.min_power(1, 1), G.connected_components_set())
+#G.view()
 
 
