@@ -1,13 +1,10 @@
 // Graph visualisation
 graph "Graph" {
 	graph [concentrate=True]
-	1 [color=red fontcolor=red]
 	1 -- 2 [label="weight = 1
- length = 1" color=red weight=1]
-	2 [color=red fontcolor=red]
+ length = 1" weight=1]
 	2 -- 3 [label="weight = 1
- length = 1" color=red weight=1]
-	3 [color=red fontcolor=red]
+ length = 1" weight=1]
 	4 -- 5 [label="weight = 1
  length = 1" weight=1]
 	5 -- 7 [label="weight = 1

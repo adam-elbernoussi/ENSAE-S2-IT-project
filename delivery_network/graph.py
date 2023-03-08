@@ -204,12 +204,12 @@ def graph_from_file(filename):
         The nodes (node1, node2) should be named 1..n
         All values are integers.
 
-    Parameters: 
+    Parameters:
     -----------
     filename: str
         The name of the file
 
-    Outputs: 
+    Outputs:
     -----------
     g: Graph
         An object of the class Graph with the graph from file_name.
@@ -237,7 +237,6 @@ def graph_from_file(filename):
 G = graph_from_file("input/network.01.in")
 print(G)
 print(G.min_power(1, 3), G.connected_components_set())
-G.view(1, 3)
-
+#G.view()
 
 
