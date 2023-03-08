@@ -2,10 +2,24 @@ from graph import Graph, graph_from_file
 
 
 data_path = "input/"
-file_name = "network.01.in"
+file_name = "network.1.in"
 
 g = graph_from_file(data_path + file_name)
 print(g)
+
+import time
+#We will reach the time needed to find the min power of the first ten traject of routes.1.in
+with open("/home/onyxia/work/ENSAE-S2-IT-project/input/routes.1.in", "r") as file:
+    t1 = time.perf_counter()
+    for _ in range(10):
+        _tmp = list(map(int, file.readline().split()))
+        if len(_tmp) == 3:
+            node1, node2, _= _tmp
+            g.min_power(node1, node2)
+    t2= time.perf_counter()
+#print(t2-t1) output : 0.0013727350160479546
+#hence the time needed to calculate min power of each traject of the file routes.1.in is 0.0013727350160479546*14 = 0.01921829022
+
 
 def kruskal(graph) :
     #tri des arêtes par ordre croissant de poids
