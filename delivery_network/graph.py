@@ -237,6 +237,6 @@ def graph_from_file(filename):
 G = graph_from_file("input/network.01.in")
 print(G)
 print(G.min_power(1, 3), G.connected_components_set())
-#G.view()
+G.view(1, 3)
 
 
