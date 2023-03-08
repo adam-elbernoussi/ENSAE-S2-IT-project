@@ -24,7 +24,7 @@ def time_array():
     """
     import time #import the module time
 
-    res = dict([[i, 0] for i in range(1, 2)])
+    res = dict([[i, 0] for i in range(1, 3)]) #warning we should put range(1, 11) here
     for i in res:
         g = graph_from_file("input/network.{}.in".format(i))
         with open("input/routes.{}.in".format(i), "r") as file:
@@ -36,7 +36,8 @@ def time_array():
                 g.min_power(node1, node2)
             t2 = time.perf_counter()
         res[i] = ((t2-t1)/10)*n
-    return dict([["routes.{}.in".format(i), res[i]] for i in range(1, 2)]) 
+    return dict([["routes.{}.in".format(i), res[i]] for i in range(1, 3)]) #warning we should put range(1, 11) here
+    #this function seems to be ok for network 1 or 2
 
 
 
