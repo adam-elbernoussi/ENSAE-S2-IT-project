@@ -168,6 +168,8 @@ class Graph:
         import graphviz
         dot = graphviz.Graph('Graph', comment='Graph visualisation', graph_attr = {"concentrate" : 'True'})
         verified_edge = []
+        for i in self.graph:
+            dot.node('{}'.format(i))
         if ((node1 != None) and (node2 != None)):
             path, _ = self.min_power(node1, node2)
             for i in self.graph:
@@ -256,9 +258,9 @@ def kruskal(g) :
 ####################################################################################################################################################################################
 
 g = graph_from_file("input/network.02.in")
-#print(g)
+print(g)
 #print(g.min_power(1, 3), g.connected_components_set())
 g.view()
-kruskal(g).view()
+#kruskal(g).view()
 
 
