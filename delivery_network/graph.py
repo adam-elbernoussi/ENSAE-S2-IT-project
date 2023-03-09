@@ -192,8 +192,6 @@ class Graph:
 
 
 
-
-
 def graph_from_file(filename):
     """
     Reads a text file and returns the graph as an object of the Graph class.
@@ -230,13 +228,37 @@ def graph_from_file(filename):
     return g
 
 
+def kruskal(g) :
+    #tri des arêtes par ordre croissant de poids
+    edges=sorted(g,key=lambda x:x[2])
+    #Initialisation de la strucuture Union-Find
+    parent=list(range(g.nodes))
+    
+    def find(x):
+        if parent[x]==x:
+            return x
+        parent[x]=find(parent[x])
+        return parent[x]
+    
+    def union(x,y):
+        parent[find(x)]=find(y)
+    
+    #construction de l'arbre couvrant de poids minimal
+    g_mst=Graph(range(g.nodes))
+    for u,v,w in edges:
+        if find(u)!=find(v):
+            g_mst.add_edge(u,v,w)
+            union(u,v)
+    return g_mst
+
 ####################################################################################################################################################################################
 #                   test
 ####################################################################################################################################################################################
 
-G = graph_from_file("input/network.1.in")
-#print(G)
-#print(G.min_power(1, 1), G.connected_components_set())
-#G.view()
+g = graph_from_file("input/network.02.in")
+#print(g)
+#print(g.min_power(1, 3), g.connected_components_set())
+g.view()
+kruskal(g).view()
 
 
