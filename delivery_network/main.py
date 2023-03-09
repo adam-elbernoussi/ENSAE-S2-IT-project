@@ -7,7 +7,7 @@ file_name = "network.1.in"
 g = graph_from_file(data_path + file_name)
 print(g)
 
-import time #import the module time
+
 def time_array():
     """
     This function takes no parameters and simply return a DataFrame with the average time needed
@@ -39,7 +39,37 @@ def time_array():
     return dict([["routes.{}.in".format(i), res[i]] for i in range(1, 3)]) #warning we should put range(1, 11) here
     #this function seems to be ok for network 1 or 2
 
+"""
+On va répondre à la question 10 à l'aide de ce commentaire
+Soit un graphe G et A un arbre couvrant de poids minimal du graphe G. On considère T un trajet de G. 
 
+Déjà,il est clair que 
+Puissance minimale pour couvrir T dans G <= Puissance minimale pour couvrir T dans A
+
+De plus, distinguons deux cas : 
+
+Cas 1 : Il existe une arrête de T qui n'est pas dans A. 
+On appelle C le sous graphe de G formé de l'ensemble des arêtes de T qui sont dans A, et de l'ensemble des 
+arêtes de T qui ne sont pas dans A.
+Soit B un arbre couvrant de poids minimal du graphe C
+Alors B couvre tous les sommets de T (Car B contient toutes les arrêtes de T). Notons D le sous graphe de G composé de 
+l'ensemble des arrêtes de T qui sont dans A. Puisque A est un arbre couvrant de poids minimal pour G, il est aussi un 
+arbre couvrant de poids minimal pour D. Donc somme des poids des arrêtes dans A <= somme des poids des arrêtes dans B.
+
+De plus, B contenant toutes les arrêtes de T qui sont dans A, 
+Puissance minimale pour couvrir T dans A <= Puissance minimale pour couvrir T dans B
+Par le théorème de sous-optimalité de l'arbre de poids minimal, 
+Puissance minimale pour couvrir T dans A = Puissance minimale pour couvrir T dans B
+Or il est clair que la puissance minimale pour couvrir T dans B est égale à la puissance minimale pour couvrir T dans G
+D'où Puissance minimale pour couvrir T dans A = Puissance minimale pour couvrir T dans G 
+
+D'où le résultat
+
+Cas 2 : T se trouve totalement dans A. Alors toutes les arrêtes de T qui sont dans A ont un poids nul
+et sont donc nécessaire pour couvrir T. Le résultat est alors clair.
+
+
+"""
 
 def kruskal(graph) :
     #tri des arêtes par ordre croissant de poids
