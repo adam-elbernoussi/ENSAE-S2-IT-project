@@ -40,9 +40,6 @@ def time_array():
     return dict([["routes.{}.in".format(i), res[i]] for i in range(1, 3)]) #warning we should put range(1, 11) here
     #this function seems to be ok for network 1 or 2
 
-<<<<<<< HEAD
-print(time_array())
-=======
 """
 On va répondre à la question 10 à l'aide de ce commentaire
 Soit un graphe G et A un arbre couvrant de poids minimal du graphe G. On considère T un trajet de G. 
@@ -72,31 +69,4 @@ D'où le résultat
 Cas 2 : T se trouve totalement dans A. Alors toutes les arrêtes de T qui sont dans A ont un poids nul
 et sont donc nécessaire pour couvrir T. Le résultat est alors clair.
 
-
 """
-
-def kruskal(graph) :
-    #tri des arêtes par ordre croissant de poids
-    edges=sorted(graph.edges,key=lambda x:x[2])
-    #Initialisation de la strucuture Union-Find
-    parent=list(range(graph.n))
-    
-    def find(x):
-        if parent[x]==x:
-            return x
-        parent[x]=find(parent[x])
-        return parent[x]
-    
-    def union(x,y):
-        parent[find(x)]=find(y)
-    
-    #construction de l'arbre couvrant de poids minimal
-    mst=Graph(graph.n)
-    for u,v,w in edges:
-        if find(u)!=find(v):
-            mst.add_edge(u,v,w)
-            union(u,v)
-    return mst
-
-print(time_array())
->>>>>>> origin/main
