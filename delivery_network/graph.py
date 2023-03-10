@@ -177,7 +177,7 @@ class Graph:
                     dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
                 for j in self.graph[i]: #we can probably optimize/clarify this double for loop
                     if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] in path):
-                        if (i == path[0]) and (j[0]== path[-1]):
+                        if (i == path[0]) and (j[0]== path[-1]) and (len(path) != 2):
                             dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                             #Actually the method Graphviz.edge automatically create the node
                             verified_edge.append({i, j[0]})
@@ -235,11 +235,15 @@ def graph_from_file(filename):
     return g
 
 
-def kruskal(g) :
+def kruskal(g):
     #tri des arêtes par ordre croissant de poids
-    edges=sorted(g,key=lambda x:x[2])
+    set_edges = []
+    for a in g.graph:
+        for j in g.graph[a]:
+            set_edges.append([a, j[0], j[1]])
+    edges=sorted(set_edges,key=lambda x:x[2])
     #Initialisation de la strucuture Union-Find
-    parent=list(range(g.nodes))
+    parent=list(g.nodes)
     
     def find(x):
         if parent[x]==x:
@@ -251,7 +255,7 @@ def kruskal(g) :
         parent[find(x)]=find(y)
     
     #construction de l'arbre couvrant de poids minimal
-    g_mst=Graph(range(g.nodes))
+    g_mst=Graph(list(g.nodes))
     for u,v,w in edges:
         if find(u)!=find(v):
             g_mst.add_edge(u,v,w)
@@ -262,10 +266,10 @@ def kruskal(g) :
 #                   test
 ####################################################################################################################################################################################
 
-g = graph_from_file("input/network.02.in")
+g = graph_from_file("input/network.01.in")
 print(g)
-print(g.min_power(1, 2), g.connected_components_set())
-g.view(1, 3)
-#kruskal(g).view()
-
+print(g.min_power(1, 2), g.connected_components_set(), g.nodes)
+#g.view(1, 2)
+kruskal(g).view()
+#print(g.nodes)
 
