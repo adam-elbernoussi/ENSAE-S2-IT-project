@@ -120,23 +120,20 @@ class Graph:
         Should return path, min_power. 
         """
         #Using binary research
-
-        ############################################# 
-        # est-ce plus opti de commencer par chercher l'arrête la plus lourde ?
-        ############################################# 
-        
         #This part is for security : avoid the case where hte while loop goes infinite
         src_dest_same_connected_component = False
         for a in self.connected_components_set():
             if {src, dest} < a:
                 src_dest_same_connected_component = True
+        #Find min and max of edges' weight 
+        _tmp = []
+        for i in self.graph:
+            for j in self.graph[i]:
+                _tmp.append(j[1])
+        a = min(_tmp)
+        b = max(_tmp)
         #From this point it is the real function
         if src_dest_same_connected_component:
-            a = 0
-            b = 1
-            while self.get_path_with_power(src, dest, b) == None:
-                a = b
-                b *= 2
             while (b-a) >= 1:
                 if self.get_path_with_power(src, dest, (a+b)/2) != None:
                     b = (a+b)/2
@@ -243,16 +240,26 @@ def kruskal(g):
             set_edges.append([a, j[0], j[1]])
     edges=sorted(set_edges,key=lambda x:x[2])
     #Initialisation de la strucuture Union-Find
-    parent=list(g.nodes)
+    parent = list(g.nodes)
+    #parent = [x-1 for x in list(g.nodes)]
+    print(parent)
     
     def find(x):
-        if parent[x]==x:
+        #print(x)
+        if parent[x-1]==x:
             return x
-        parent[x]=find(parent[x])
-        return parent[x]
+        parent[x-1]=find(parent[x-1])
+        return parent[x-1]
     
+   #def find_2(x):
+        #print(x)
+        #if parent[x-1]==x:
+        #    return x
+        #parent[x-1]=find(parent[x-1])
+        #return parent[x-1]
+
     def union(x,y):
-        parent[find(x)]=find(y)
+        parent[find(x)-1]=find(y)
     
     #construction de l'arbre couvrant de poids minimal
     g_mst=Graph(list(g.nodes))
@@ -266,10 +273,8 @@ def kruskal(g):
 #                   test
 ####################################################################################################################################################################################
 
-g = graph_from_file("input/network.01.in")
+g = graph_from_file("input/network.05.in")
 print(g)
-print(g.min_power(1, 2), g.connected_components_set(), g.nodes)
-#g.view(1, 2)
-kruskal(g).view()
-#print(g.nodes)
-
+print(g.min_power(1, 2), g.connected_components_set())
+#g.view()
+#kruskal(g).view()
