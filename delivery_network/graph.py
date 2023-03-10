@@ -257,10 +257,10 @@ def kruskal(g) :
 #                   test
 ####################################################################################################################################################################################
 
-g = graph_from_file("input/network.02.in")
+g = graph_from_file("input/network.03.in")
 print(g)
-#print(g.min_power(1, 3), g.connected_components_set())
-g.view()
+print(g.min_power(1, 2), g.connected_components_set())
+g.view(1, 4)
 #kruskal(g).view()
 
 
