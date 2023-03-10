@@ -273,8 +273,11 @@ def kruskal(g):
 #                   test
 ####################################################################################################################################################################################
 
-g = graph_from_file("input/network.05.in")
-print(g)
-print(g.min_power(1, 2), g.connected_components_set())
+#g = graph_from_file("input/network.05.in")
+#print(g)
+#print(g.min_power(1, 2), g.connected_components_set())
 #g.view()
 #kruskal(g).view()
+route = open("input/routes.1.in", "r")
+n = list(map(int, route.readline().split()))[0]
+print(n)

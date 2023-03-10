@@ -70,3 +70,16 @@ Cas 2 : T se trouve totalement dans A. Alors toutes les arrêtes de T qui sont d
 et sont donc nécessaire pour couvrir T. Le résultat est alors clair.
 
 """
+
+from graph import kruskal
+#We will now create files routes.xx.out
+g = graph_from_file("input/network.1.in")
+g = kruskal(g)
+route = open("input/routes.1.in", "r")
+fichier = open("routes.1.out", "w")
+n = int(list(map(int, route.readline().split()))[0]) # not opti
+for i in range(n):
+    src, dest, _ = map(int, route.readline().split())    
+    fichier.write("{}\n".format(g.min_power(src, dest)[1]))
+
+
