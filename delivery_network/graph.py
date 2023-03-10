@@ -177,9 +177,14 @@ class Graph:
                     dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
                 for j in self.graph[i]: #we can probably optimize/clarify this double for loop
                     if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] in path):
-                        dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]), color = 'red')
-                        #Actually the method Graphviz.edge automatically create the node
-                        verified_edge.append({i, j[0]})
+                        if (i == path[0]) and (j[0]== path[-1]):
+                            dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
+                            #Actually the method Graphviz.edge automatically create the node
+                            verified_edge.append({i, j[0]})
+                        else:
+                            dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]), color = 'red')
+                            #Actually the method Graphviz.edge automatically create the node
+                            verified_edge.append({i, j[0]})
                     elif {i, j[0]} not in verified_edge:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                         verified_edge.append({i, j[0]})
@@ -257,10 +262,10 @@ def kruskal(g) :
 #                   test
 ####################################################################################################################################################################################
 
-g = graph_from_file("input/network.03.in")
+g = graph_from_file("input/network.02.in")
 print(g)
 print(g.min_power(1, 2), g.connected_components_set())
-g.view(1, 4)
+g.view(1, 3)
 #kruskal(g).view()
 
 

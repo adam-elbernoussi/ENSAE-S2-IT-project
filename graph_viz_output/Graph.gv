@@ -12,13 +12,12 @@ graph "Graph" {
 	9
 	10
 	1 [color=red fontcolor=red]
-	1 -- 4 [label="weight = 11
- length = 1" color=red weight=11]
-	1 -- 2 [label="weight = 10
- length = 1" color=red weight=10]
-	2 [color=red fontcolor=red]
-	2 -- 3 [label="weight = 4
+	1 -- 2 [label="weight = 11
+ length = 1" weight=11]
+	1 -- 4 [label="weight = 4
  length = 1" color=red weight=4]
+	2 -- 3 [label="weight = 4
+ length = 1" weight=4]
 	3 [color=red fontcolor=red]
 	3 -- 4 [label="weight = 4
  length = 1" color=red weight=4]
