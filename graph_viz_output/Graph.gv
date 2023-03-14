@@ -11,8 +11,6 @@ graph "Graph" {
 	8
 	9
 	10
-	1 -- 2 [label="weight = 11
- length = 1" weight=11]
 	1 -- 4 [label="weight = 4
  length = 1" weight=4]
 	2 -- 3 [label="weight = 4

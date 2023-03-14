@@ -122,12 +122,9 @@ class Graph:
         #Using binary research
 
         #Find min and max of edges' weight 
-        _tmp = []
-        for i in self.graph:
-            for j in self.graph[i]:
-                _tmp.append(j[1])
-        a = min(_tmp)
-        b = max(_tmp)
+        _list_edges = [i[0] for i in g.graph.values() if len(i)>0]
+        a = min([j[1] for j in _list_edges])
+        b = max([j[1] for j in _list_edges])
         #From this point it is the real function
         while (b-a) >= 1:
             if self.get_path_with_power(src, dest, (a+b)/2) != None:
@@ -138,13 +135,18 @@ class Graph:
             return self.get_path_with_power(src, dest, int(b)), int(b)    #assumed here that power is always an integer 
         raise ValueError("The two given nodes are not in the same connected component.")
 
+    #def min_power_opti(self, src, dest):
+        #i1, i2 = src, src
+        #while (i1 != dest) and (i2!= dest):
+
+
     def view(self, node1 = None, node2 = None):
         """
         This function allow a visualisation of a graph
 
         Actually this function takes 2 nodes of the graph and display the entire graph with
-        the shortest path between the two nodes in red
-        If the function does not recieve two nodes it will simply display the graph
+        the shortest (meaning the least weight-costly) path between the two nodes in red.
+        If the function does not recieve two nodes it will simply display the graph.
         The function automatically save the Graph in the file ../graph_viz_output
 
         Parameters:
@@ -267,7 +269,7 @@ def min_power_for_path(g, t):
     curr = start
     while curr != end:
         neighbors = mst.graph[curr]
-        for neighbor, weight in neighbors:
+        for neighbor, weight, _ in neighbors:
             if neighbor not in path:
                 path.append(neighbor)
                 curr = neighbor
@@ -285,22 +287,9 @@ def min_power_for_path(g, t):
 ####################################################################################################################################################################################
 #                   test
 ####################################################################################################################################################################################
-<<<<<<< HEAD
 import time
+g = graph_from_file("input/network.02.in")
 t1 = time.perf_counter()
-g = graph_from_file("input/network.2.in")
-g = kruskal(g)
-g.min_power(4, 5)
+print(min_power_for_path(g, [3, 4])[0])
 t2 = time.perf_counter()
 print(t2-t1)
-=======
-
-#g = graph_from_file("input/network.05.in")
-#print(g)
-#print(g.min_power(1, 2), g.connected_components_set())
-#g.view()
-#kruskal(g).view()
-route = open("input/routes.1.in", "r")
-n = list(map(int, route.readline().split()))[0]
-print(n)
->>>>>>> origin/HEAD
