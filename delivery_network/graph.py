@@ -120,11 +120,7 @@ class Graph:
         Should return path, min_power. 
         """
         #Using binary research
-        #This part is for security : avoid the case where hte while loop goes infinite
-        src_dest_same_connected_component = False
-        for a in self.connected_components_set():
-            if {src, dest} < a:
-                src_dest_same_connected_component = True
+
         #Find min and max of edges' weight 
         _tmp = []
         for i in self.graph:
@@ -133,15 +129,15 @@ class Graph:
         a = min(_tmp)
         b = max(_tmp)
         #From this point it is the real function
-        if src_dest_same_connected_component:
-            while (b-a) >= 1:
-                if self.get_path_with_power(src, dest, (a+b)/2) != None:
-                    b = (a+b)/2
-                else : 
-                    a = (a+b)/2
-            return self.get_path_with_power(src, dest, int(b)), int(b)     #assumed here that power is always an integer 
+        while (b-a) >= 1:
+            if self.get_path_with_power(src, dest, (a+b)/2) != None:
+                b = (a+b)/2
+            else : 
+                a = (a+b)/2
+        if self.get_path_with_power(src, dest, int(b)) != None:
+            return self.get_path_with_power(src, dest, int(b)), int(b)    #assumed here that power is always an integer 
         raise ValueError("The two given nodes are not in the same connected component.")
-    
+
     def view(self, node1 = None, node2 = None):
         """
         This function allow a visualisation of a graph
@@ -241,8 +237,6 @@ def kruskal(g):
     edges=sorted(set_edges,key=lambda x:x[2])
     #Initialisation de la strucuture Union-Find
     parent = list(g.nodes)
-    #parent = [x-1 for x in list(g.nodes)]
-    print(parent)
     
     def find(x):
         #print(x)
@@ -250,13 +244,6 @@ def kruskal(g):
             return x
         parent[x-1]=find(parent[x-1])
         return parent[x-1]
-    
-   #def find_2(x):
-        #print(x)
-        #if parent[x-1]==x:
-        #    return x
-        #parent[x-1]=find(parent[x-1])
-        #return parent[x-1]
 
     def union(x,y):
         parent[find(x)-1]=find(y)
@@ -272,12 +259,10 @@ def kruskal(g):
 ####################################################################################################################################################################################
 #                   test
 ####################################################################################################################################################################################
-
-#g = graph_from_file("input/network.05.in")
-#print(g)
-#print(g.min_power(1, 2), g.connected_components_set())
-#g.view()
-#kruskal(g).view()
-route = open("input/routes.1.in", "r")
-n = list(map(int, route.readline().split()))[0]
-print(n)
+import time
+t1 = time.perf_counter()
+g = graph_from_file("input/network.2.in")
+g = kruskal(g)
+g.min_power(4, 5)
+t2 = time.perf_counter()
+print(t2-t1)

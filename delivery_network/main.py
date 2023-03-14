@@ -2,10 +2,10 @@ from graph import Graph, graph_from_file
 
 
 data_path = "input/"
-file_name = "network.1.in"
+file_name = "network.2.in"
 
 g = graph_from_file(data_path + file_name)
-print(g)
+#print(g)
 #g.view()
 
 
@@ -73,13 +73,13 @@ et sont donc nécessaire pour couvrir T. Le résultat est alors clair.
 
 from graph import kruskal
 #We will now create files routes.xx.out
-g = graph_from_file("input/network.1.in")
+
+#g = graph_from_file("input/network.{}.in".format(2))
 g = kruskal(g)
-route = open("input/routes.1.in", "r")
-fichier = open("routes.1.out", "w")
+route = open("input/routes.{}.in".format(2), "r")
+fichier = open("routes.{}.out".format(2), "w")
 n = int(list(map(int, route.readline().split()))[0]) # not opti
 for i in range(n):
     src, dest, _ = map(int, route.readline().split())    
     fichier.write("{}\n".format(g.min_power(src, dest)[1]))
-
-
+    
