@@ -54,6 +54,10 @@ class Graph:
             Minimum power on this edge
         dist: numeric (int or float), optional
             Distance between node1 and node2 on the edge. Default is 1.
+
+        Outputs:
+        -----------
+        None
         """
         if node1 not in self.graph:
             self.graph[node1] = []
@@ -70,8 +74,23 @@ class Graph:
     
 
     def get_path_with_power(self, src, dest, power):
+        """
+        The aim of this function is to indicate if a traject can be travelled with
+        a given power.
+        More practically, given a power and a traject the function return None if the traject 
+        can not be travelled and else return the path
+        
+        Parameters: 
+        -----------
+        src : NodeType
+            First node of the traject
+        dest : NodeType
+            Last node of the traject
+        power : numeric (int or float)
+            Power to test
+        """
         visited = set()
-        stack = [(src, [], 0)]  # (node, path, total power)
+        stack = [(src, [], 0)]  #(node, path, total power)
         while stack:
             node, path, total_power = stack.pop()
             if node == dest and total_power <=power:
@@ -82,7 +101,6 @@ class Graph:
                     if min_power <= power and neighbor not in visited:
                         stack.append((neighbor, path + [node], max(min_power, total_power)))
         return None
-    
     #complexité en O(V+E)
 
 
