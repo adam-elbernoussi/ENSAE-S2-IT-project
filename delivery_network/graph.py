@@ -256,9 +256,36 @@ def kruskal(g):
             union(u,v)
     return g_mst
 
+
+def min_power_for_path(g, t):
+    # Calcul de l'arbre couvrant de poids minimal
+    mst = kruskal(g)
+
+    # Recherche du chemin entre les deux extrémités du trajet t dans l'arbre couvrant
+    start, end = t[0], t[-1]
+    path = [start]
+    curr = start
+    while curr != end:
+        neighbors = mst.graph[curr]
+        for neighbor, weight in neighbors:
+            if neighbor not in path:
+                path.append(neighbor)
+                curr = neighbor
+                break
+
+    # Calcul de la puissance minimale requise pour couvrir le trajet
+    power = 0
+    for i in range(len(path)-1):
+        u, v = path[i], path[i+1]
+        edge_weight = g.get_edge_weight(u, v)
+        power = max(power, edge_weight)
+
+    return power, path
+
 ####################################################################################################################################################################################
 #                   test
 ####################################################################################################################################################################################
+<<<<<<< HEAD
 import time
 t1 = time.perf_counter()
 g = graph_from_file("input/network.2.in")
@@ -266,3 +293,14 @@ g = kruskal(g)
 g.min_power(4, 5)
 t2 = time.perf_counter()
 print(t2-t1)
+=======
+
+#g = graph_from_file("input/network.05.in")
+#print(g)
+#print(g.min_power(1, 2), g.connected_components_set())
+#g.view()
+#kruskal(g).view()
+route = open("input/routes.1.in", "r")
+n = list(map(int, route.readline().split()))[0]
+print(n)
+>>>>>>> origin/HEAD
