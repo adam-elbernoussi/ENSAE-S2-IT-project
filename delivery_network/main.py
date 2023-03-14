@@ -74,7 +74,7 @@ et sont donc nécessaire pour couvrir T. Le résultat est alors clair.
 from graph import kruskal
 #We will now create files routes.xx.out
 
-#g = graph_from_file("input/network.{}.in".format(2))
+g = graph_from_file("input/network.{}.in".format(2))
 g = kruskal(g)
 route = open("input/routes.{}.in".format(2), "r")
 fichier = open("routes.{}.out".format(2), "w")
