@@ -135,11 +135,6 @@ class Graph:
             return self.get_path_with_power(src, dest, int(b)), int(b)    #assumed here that power is always an integer 
         raise ValueError("The two given nodes are not in the same connected component.")
 
-    #def min_power_opti(self, src, dest):
-        #i1, i2 = src, src
-        #while (i1 != dest) and (i2!= dest):
-
-
     def view(self, node1 = None, node2 = None):
         """
         This function allow a visualisation of a graph
@@ -258,7 +253,6 @@ def kruskal(g):
             union(u,v)
     return g_mst
 
-
 def min_power_for_path(g, t):
     # Calcul de l'arbre couvrant de poids minimal
     mst = kruskal(g)
@@ -267,12 +261,15 @@ def min_power_for_path(g, t):
     start, end = t[0], t[-1]
     path = [start]
     curr = start
-    while curr != end:
+    verified = {start}
+    while (curr != end):
         neighbors = mst.graph[curr]
         for neighbor, weight, _ in neighbors:
-            if neighbor not in path:
+            if (neighbor not in path):
                 path.append(neighbor)
+                verified.add(neighbor)
                 curr = neighbor
+                print(path)
                 break
 
     # Calcul de la puissance minimale requise pour couvrir le trajet
@@ -284,12 +281,16 @@ def min_power_for_path(g, t):
 
     return power, path
 
+def min_power_for_path(g, path):
+    
+
 ####################################################################################################################################################################################
 #                   test
 ####################################################################################################################################################################################
 import time
-g = graph_from_file("input/network.02.in")
+g = graph_from_file("input/network.5.in")
+g = kruskal(g)
 t1 = time.perf_counter()
-print(min_power_for_path(g, [3, 4])[0])
+g.get_path_with_power(3, 6, 40000)
 t2 = time.perf_counter()
 print(t2-t1)
