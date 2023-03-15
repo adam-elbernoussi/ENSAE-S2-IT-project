@@ -166,6 +166,8 @@ class Graph:
         to travel a traject.
         If the two nodes are not in the same connected components, the function raise an error
 
+        The complexity of this function is O(V+E).
+
         Parameters:
         -----------
         src : NodeType
@@ -304,6 +306,20 @@ def graph_from_file(filename):
 
 
 def kruskal(g):
+    """
+    The aim of this function is to use the kruskal algorithm
+    to find the minimum spanning tree of a given graph.
+    
+    Parameters:
+    -----------
+    g: Graph
+        An object of the class Graph
+
+    Outputs:
+    -----------
+    g_mst: Graph
+        An object of the class Graph : the minimum spanning tree of g
+    """
     #tri des arêtes par ordre croissant de poids
     set_edges = []
     for a in g.graph:
@@ -330,12 +346,14 @@ def kruskal(g):
             g_mst.add_edge(u,v,w)
             union(u,v)
     return g_mst
-"""
-Reads a tree and a traject and return the minimal power to do this traject.
 
-First, we do a deep first search on the tree. Then we rely the traject with the dictionary. Finally, 
-"""
+
 def min_power_for_path(g, source, destination):
+    """
+    Reads a tree and a traject and return the minimal power to do this traject.
+
+    First, we do a deep first search on the tree. Then we rely the traject with the dictionary. Finally, 
+    """
     # obtenir l'arbre couvrant de poids minimal
     assert g == kruskal(g), "Warning ! The graph given is not a minimum spanning tree"
 
