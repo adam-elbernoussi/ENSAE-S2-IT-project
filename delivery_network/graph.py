@@ -40,6 +40,7 @@ class Graph:
                 output += f"{source}-->{destination}\n"
         return output
     
+
     def add_edge(self, node1, node2, power_min, dist=1):
         """
         Adds an edge to the graph. Graphs are not oriented, hence an edge is added to the adjacency list of both end nodes. 
@@ -88,6 +89,10 @@ class Graph:
             Last node of the traject
         power : numeric (int or float)
             Power to test
+
+        Outputs:
+        -----------
+        None
         """
         visited = set()
         stack = [(src, [], 0)]  #(node, path, total power)
@@ -105,6 +110,19 @@ class Graph:
 
 
     def connected_components(self):
+        """
+        This function uses the auxiliary function '_dfs' in order to find 
+        the connected component of the graph
+        
+        Parameters:
+        -----------
+        None
+
+        Outputs:
+        -----------
+        components : list of list of int (node)
+            list of connected component (one list by connected component)
+        """
         visited = set()
         components = []
         for node in self.nodes:
@@ -113,6 +131,7 @@ class Graph:
                 self._dfs(node, visited, component)
                 components.append(component)
         return components
+
 
     def _dfs(self, node, visited, component):
         """
@@ -130,8 +149,12 @@ class Graph:
         """
         The result should be a set of frozensets (one per component), 
         For instance, for network01.in: {frozenset({1, 2, 3}), frozenset({4, 5, 6, 7})}
+
+        This function transform the list of connected component in a set of connected component,
+        each connected component is no more a list but a frozenset of nodes
         """
         return set(map(frozenset, self.connected_components()))
+    
     
     def min_power(self, src, dest):
         """
@@ -139,12 +162,12 @@ class Graph:
 
         The aim of this function is to use binary research in order to return the minimum power
         to travel a traject.
-        If the two nodes are not in the same connected components, the function return an error
+        If the two nodes are not in the same connected components, the function raise an error
 
         Parameters:
         -----------
         src : NodeType
-            Source :A node of the graph
+            Source : A node of the graph
         dest : NodeType
             Destination : Another node of the graph
         
@@ -170,6 +193,7 @@ class Graph:
         if self.get_path_with_power(src, dest, int(b)) != None:
             return self.get_path_with_power(src, dest, int(b)), int(b)    #assumed here that power is always an integer 
         raise ValueError("The two given nodes are not in the same connected component.")
+    
 
     def view(self, node1 = None, node2 = None):
         """
@@ -237,6 +261,7 @@ class Graph:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                         verified_edge.append({i, j[0]})
             dot.render(directory='graph_viz_output', view=True) #this is to print the graph
+
 
 
 
