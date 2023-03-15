@@ -139,6 +139,7 @@ class Graph:
 
         The aim of this function is to use binary research in order to return the minimum power
         to travel a traject.
+        If the two nodes are not in the same connected components, the function return an error
 
         Parameters:
         -----------
