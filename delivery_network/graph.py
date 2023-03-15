@@ -43,7 +43,8 @@ class Graph:
 
     def add_edge(self, node1, node2, power_min, dist=1):
         """
-        Adds an edge to the graph. Graphs are not oriented, hence an edge is added to the adjacency list of both end nodes. 
+        Adds an edge to the graph. Graphs are not oriented, 
+        hence an edge is added to the adjacency list of both end nodes. 
 
         Parameters: 
         -----------
@@ -80,6 +81,8 @@ class Graph:
         a given power.
         More practically, given a power and a traject the function return None if the traject 
         can not be travelled and else return the path
+
+        The complexity of this algorithm is O(V+E)
         
         Parameters: 
         -----------
@@ -106,7 +109,6 @@ class Graph:
                     if min_power <= power and neighbor not in visited:
                         stack.append((neighbor, path + [node], max(min_power, total_power)))
         return None
-    #complexité en O(V+E)
 
 
     def connected_components(self):
