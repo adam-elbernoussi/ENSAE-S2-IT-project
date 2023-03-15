@@ -16,7 +16,7 @@ def time_array():
     
     Parameters:
     -----------
-        None
+    None
 
     Outputs:
     -----------
@@ -81,4 +81,4 @@ for i in range(1, 11):
     n = int(list(map(int, route.readline().split()))[0]) # not opti
     for i in range(n):
         source, destination, _ = map(int, route.readline().split())    
-        fichier.write("{}\n".format(min_power_for_path(g, source, destination)[1]))
+        fichier.write("{}\n".format(min_power_for_path(g, source, destination)))

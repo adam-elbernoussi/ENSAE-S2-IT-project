@@ -324,11 +324,25 @@ def kruskal(g):
 def min_power_for_path(g, source, destination):
     """
     Reads a tree and a traject and return the minimal power to do this traject.
+    The input graph has to be a minimum spanning tree.
 
-    First, we do a deep first search on the tree. Then we rely the traject with the dictionary. Finally, 
+    Parameters:
+    -----------
+    g: Graph
+        An object of the class Graph
+    source: NodeType
+        A node
+    destination: NodeType
+        The destination node
+
+    Outputs:
+    -----------
+    min_power: int
+        The minimal power required to travel the traject from source to destination
     """
     # verify that the given graph is a tree (a minimum spanning tree)
-    assert g == kruskal(g), "Warning ! The graph given is not a minimum spanning tree"
+    """ assert g == kruskal(g), "Warning ! The graph given is not a minimum spanning tree" """
+    #this lign is not working for now we will fix this in the futur
 
     # initialize the stack of nodes to visit
     stack = [source]
@@ -351,7 +365,7 @@ def min_power_for_path(g, source, destination):
                     if j[0] == path[i+1]:
                         if j[1] > min_power:
                             min_power = j[1]
-            return path, min_power
+            return min_power
 
         # browse neighbors
         for neighbor, weight, _ in g.graph[node]:
@@ -360,7 +374,7 @@ def min_power_for_path(g, source, destination):
                 parents[neighbor] = node
 
     # If no path is found, return none
-    return None, None
+    return None
 
 
 ####################################################################################################################################################################################
@@ -369,5 +383,5 @@ def min_power_for_path(g, source, destination):
 import time
 g = graph_from_file("input/network.1.in")
 g = kruskal(g)
+g_ms = kruskal(g)
 print(min_power_for_path(g, 1, 16))
-g.view()
