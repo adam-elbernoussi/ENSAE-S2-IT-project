@@ -327,7 +327,7 @@ def min_power_for_path(g, source, destination):
 
     First, we do a deep first search on the tree. Then we rely the traject with the dictionary. Finally, 
     """
-    # obtenir l'arbre couvrant de poids minimal
+    # verify that the given graph is a tree (a minimum spanning tree)
     assert g == kruskal(g), "Warning ! The graph given is not a minimum spanning tree"
 
     # initialize the stack of nodes to visit
