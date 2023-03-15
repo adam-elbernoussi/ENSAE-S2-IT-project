@@ -135,7 +135,24 @@ class Graph:
     
     def min_power(self, src, dest):
         """
-        Should return path, min_power. 
+        This function should return path, min_power. 
+
+        The aim of this function is to use binary research in order to return the minimum power
+        to travel a traject.
+
+        Parameters:
+        -----------
+        src : NodeType
+            Source :A node of the graph
+        dest : NodeType
+            Destination : Another node of the graph
+        
+        Outputs:
+        -----------
+        path : list
+            The path between src and dest that costs the minimum power
+        power : int
+            The minimum power required to travel the traject between src and dest
         """
         #Using binary research
 
@@ -175,35 +192,50 @@ class Graph:
         """
         import graphviz
         dot = graphviz.Graph('Graph', comment='Graph visualisation', graph_attr = {"concentrate" : 'True'})
-        verified_edge = []
+        verified_edge = [] #list of the already implemented edges
+
+        #Initially, we create all the nodes
         for i in self.graph:
-            dot.node('{}'.format(i))
-        if ((node1 != None) and (node2 != None)):
+            dot.node('{}'.format(i))    
+
+        if ((node1 != None) and (node2 != None)): #then we have to print the grap and the path
             path, _ = self.min_power(node1, node2)
             for i in self.graph:
+
+                #we will colorize the path's nodes in red
                 if i in path:
                     dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
-                for j in self.graph[i]: #we can probably optimize/clarify this double for loop
+                
+                for j in self.graph[i]: #check all the i's neighbors
+                    #now, we implement the edges
                     if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] in path):
+
+                        #the following if is to avoid colorizing the edge between Node1 and Node2
+                        #if the path is [Node1, ..., Node2]
                         if (i == path[0]) and (j[0]== path[-1]) and (len(path) != 2):
+                            #implementing in BLACK the edge between path[0] and path[-1]
+                            #avoiding the case where the path is [node1, node2]
                             dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
-                            #Actually the method Graphviz.edge automatically create the node
                             verified_edge.append({i, j[0]})
                         else:
+                            #implementing in RED all the edges of the path
                             dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]), color = 'red')
-                            #Actually the method Graphviz.edge automatically create the node
                             verified_edge.append({i, j[0]})
+
+                    #implementing all the other edges of the graph
                     elif {i, j[0]} not in verified_edge:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                         verified_edge.append({i, j[0]})
-            dot.render(directory='graph_viz_output', view=True)
-        else: 
+
+            dot.render(directory='graph_viz_output', view=True) #this is to print the graph
+
+        else: #then we have to simply print the graph
             for i in self.graph:
-                for j in self.graph[i]: #we can probably optimize/clarify this double for loop
+                for j in self.graph[i]: 
                     if {i, j[0]} not in verified_edge:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                         verified_edge.append({i, j[0]})
-            dot.render(directory='graph_viz_output', view=True)
+            dot.render(directory='graph_viz_output', view=True) #this is to print the graph
 
 
 
