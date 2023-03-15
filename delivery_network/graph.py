@@ -312,8 +312,8 @@ def min_power_for_path(g,t):
     #vérifier que g est bien un arbre
     assert g==kruskal(g)
     #on fait un parcours en profondeur de l'arbre en utilisant une pile
-    def DFS2(g):
-        p=[g[0]] #intitialisation de la pile
+    def DFS2(g1):
+        p=[g1[0]] #intitialisation de la pile
         DSF2={} #initialisation du dictionnaire
         While p :
             s=p[-1] #on récupère le sommet précédent dans la pile
@@ -331,14 +331,14 @@ def min_power_for_path(g,t):
          
         return DFS2
     
-    def lien_trajet_dico(t,d):
+    def lien_trajet_dico(t1,d):
         d2={}
-        for s in t:
+        for s in t1:
             d2[s]=d[s]
         return d2
     
     
-    #on relie 
+    
     
                     
         
