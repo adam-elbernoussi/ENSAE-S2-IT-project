@@ -326,8 +326,10 @@ def min_power_for_path(g, source, destination):
     Reads a tree and a traject and return the minimal power to do this traject.
 
     First, we do a deep first search on the tree. Then we rely the traject with the dictionary. Finally, 
-    """
+    
     # verify that the given graph is a tree (a minimum spanning tree)
+    The complixity is in O(Nlog(N)) N is the number of edges
+    """
     assert g == kruskal(g), "Warning ! The graph given is not a minimum spanning tree"
 
     # initialize the stack of nodes to visit
