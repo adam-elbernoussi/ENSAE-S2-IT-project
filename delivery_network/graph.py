@@ -326,6 +326,8 @@ def min_power_for_path(g, source, destination):
     Reads a tree and a traject and return the minimal power to do this traject.
     The input graph has to be a minimum spanning tree.
 
+    The complixity is in O(Nlog(N)) N is the number of edges
+
     Parameters:
     -----------
     g: Graph
