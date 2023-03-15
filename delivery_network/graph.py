@@ -175,50 +175,35 @@ class Graph:
         """
         import graphviz
         dot = graphviz.Graph('Graph', comment='Graph visualisation', graph_attr = {"concentrate" : 'True'})
-        verified_edge = [] #list of the already implemented edges
-
-        #Initially, we create all the nodes
+        verified_edge = []
         for i in self.graph:
-            dot.node('{}'.format(i))    
-
-        if ((node1 != None) and (node2 != None)): #then we have to print the grap and the path
+            dot.node('{}'.format(i))
+        if ((node1 != None) and (node2 != None)):
             path, _ = self.min_power(node1, node2)
             for i in self.graph:
-
-                #we will colorize the path's nodes in red
                 if i in path:
                     dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
-                
-                for j in self.graph[i]: #check all the i's neighbors
-                    #now, we implement the edges
+                for j in self.graph[i]: #we can probably optimize/clarify this double for loop
                     if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] in path):
-
-                        #the following if is to avoid colorizing the edge between Node1 and Node2
-                        #if the path is [Node1, ..., Node2]
                         if (i == path[0]) and (j[0]== path[-1]) and (len(path) != 2):
-                            #implementing in BLACK the edge between path[0] and path[-1]
-                            #avoiding the case where the path is [node1, node2]
                             dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
+                            #Actually the method Graphviz.edge automatically create the node
                             verified_edge.append({i, j[0]})
                         else:
-                            #implementing in RED all the edges of the path
                             dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]), color = 'red')
+                            #Actually the method Graphviz.edge automatically create the node
                             verified_edge.append({i, j[0]})
-
-                    #implementing all the other edges of the graph
                     elif {i, j[0]} not in verified_edge:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                         verified_edge.append({i, j[0]})
-
-            dot.render(directory='graph_viz_output', view=True) #this is to print the graph
-
-        else: #then we have to simply print the graph
+            dot.render(directory='graph_viz_output', view=True)
+        else: 
             for i in self.graph:
-                for j in self.graph[i]: 
+                for j in self.graph[i]: #we can probably optimize/clarify this double for loop
                     if {i, j[0]} not in verified_edge:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                         verified_edge.append({i, j[0]})
-            dot.render(directory='graph_viz_output', view=True) #this is to print the graph
+            dot.render(directory='graph_viz_output', view=True)
 
 
 
@@ -285,35 +270,50 @@ def kruskal(g):
             g_mst.add_edge(u,v,w)
             union(u,v)
     return g_mst
+"""
+Reads a tree and a traject and return the minimal power to do this traject.
 
-def min_power_for_path(g, t):
-    # Calcul de l'arbre couvrant de poids minimal
-    mst = kruskal(g)
+First, we do a deep first search on the tree. Then we rely the traject with the dictionary. Finally, 
+"""
 
-    # Recherche du chemin entre les deux extrémités du trajet t dans l'arbre couvrant
-    start, end = t[0], t[-1]
-    path = [start]
-    curr = start
-    verified = {start}
-    while (curr != end):
-        neighbors = mst.graph[curr]
-        for neighbor, weight, _ in neighbors:
-            if (neighbor not in path):
-                path.append(neighbor)
-                verified.add(neighbor)
-                curr = neighbor
-                print(path)
-                break
-
-    # Calcul de la puissance minimale requise pour couvrir le trajet
-    power = 0
-    for i in range(len(path)-1):
-        u, v = path[i], path[i+1]
-        edge_weight = g.get_edge_weight(u, v)
-        power = max(power, edge_weight)
-
-    return power, path
-
+def min_power_for_path(g,t):
+    #vérifier que g est bien un arbre
+    assert g==kruskal(g)
+    #on fait un parcours en profondeur de l'arbre en utilisant une pile
+    def DFS2(g):
+        p=[g[0]] #intitialisation de la pile
+        DSF2={} #initialisation du dictionnaire
+        While p :
+            s=p[-1] #on récupère le sommet précédent dans la pile
+            m=False
+            
+            for v in g[m]:
+                if v not in DFS2 :
+                    p.append(v) 
+                    DFS2.add(v)
+                    m=True
+                    break
+            
+            if not m:
+                pile.pop()
+         
+        return DFS2
+    
+    def lien_trajet_dico(t,d):
+        d2={}
+        for s in t:
+            d2[s]=d[s]
+        return d2
+    
+    
+    #on relie 
+    
+                    
+        
+    
+    
+   
+    
     
 
 ####################################################################################################################################################################################
