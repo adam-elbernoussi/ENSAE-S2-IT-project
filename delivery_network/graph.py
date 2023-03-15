@@ -323,7 +323,7 @@ def min_power_for_path(g, source, destination):
     while stack:
         node = stack.pop()
         if node == destination:
-            # construire le chemin et le renvoyer avec la puissance minimale requise
+            # construct the path and return it with the minimum power required
             path = [destination]
             while parents[path[-1]] is not None:
                 path.append(parents[path[-1]])
