@@ -71,7 +71,7 @@ et sont donc nécessaire pour couvrir T. Le résultat est alors clair.
 
 """
 
-from graph import kruskal
+from graph import kruskal, min_power_for_path
 #We will now create files routes.xx.out
 
 g = graph_from_file("input/network.{}.in".format(2))
@@ -80,6 +80,6 @@ route = open("input/routes.{}.in".format(2), "r")
 fichier = open("routes.{}.out".format(2), "w")
 n = int(list(map(int, route.readline().split()))[0]) # not opti
 for i in range(n):
-    src, dest, _ = map(int, route.readline().split())    
-    fichier.write("{}\n".format(g.min_power(src, dest)[1]))
+    source, destination, _ = map(int, route.readline().split())    
+    fichier.write("{}\n".format(min_power_for_path(g, source, destination)[1]))
     

@@ -5,10 +5,58 @@ graph "Graph" {
 	2
 	3
 	4
-	1 -- 3 [label="weight = 2
+	5
+	6
+	7
+	8
+	9
+	10
+	11
+	12
+	13
+	14
+	15
+	16
+	17
+	18
+	19
+	20
+	1 -- 2 [label="weight = 2
  length = 1" weight=2]
-	1 -- 4 [label="weight = 4
- length = 1" weight=4]
-	1 -- 2 [label="weight = 6
- length = 1" weight=6]
+	1 -- 5 [label="weight = 2
+ length = 1" weight=2]
+	1 -- 14 [label="weight = 11
+ length = 1" weight=11]
+	1 -- 8 [label="weight = 13
+ length = 1" weight=13]
+	2 -- 3 [label="weight = 5
+ length = 1" weight=5]
+	2 -- 13 [label="weight = 8
+ length = 1" weight=8]
+	4 -- 12 [label="weight = 5
+ length = 1" weight=5]
+	4 -- 8 [label="weight = 8
+ length = 1" weight=8]
+	6 -- 17 [label="weight = 15
+ length = 1" weight=15]
+	7 -- 16 [label="weight = 13
+ length = 1" weight=13]
+	7 -- 14 [label="weight = 15
+ length = 1" weight=15]
+	8 -- 11 [label="weight = 1
+ length = 1" weight=1]
+	8 -- 20 [label="weight = 11
+ length = 1" weight=11]
+	9 -- 12 [label="weight = 9
+ length = 1" weight=9]
+	10 -- 16 [label="weight = 37
+ length = 1" weight=37]
+	13 -- 19 [label="weight = 1
+ length = 1" weight=1]
+	15 -- 19 [label="weight = 27
+ length = 1" weight=27]
+	17 -- 18 [label="weight = 11
+ length = 1" weight=11]
+	17 -- 20 [label="weight = 14
+ length = 1" weight=14]
 }

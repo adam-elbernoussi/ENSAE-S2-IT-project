@@ -308,54 +308,48 @@ Reads a tree and a traject and return the minimal power to do this traject.
 
 First, we do a deep first search on the tree. Then we rely the traject with the dictionary. Finally, 
 """
+def min_power_for_path(g, source, destination):
+    # obtenir l'arbre couvrant de poids minimal
+    assert g == kruskal(g), "Warning ! The graph given is not a minimum spanning tree"
 
-def min_power_for_path(g,t):
-    #vérifier que g est bien un arbre
-    assert g==kruskal(g)
-    #on fait un parcours en profondeur de l'arbre en utilisant une pile
-    def DFS2(g1):
-        p=[g1[0]] #intitialisation de la pile
-        DSF2={} #initialisation du dictionnaire
-        While p :
-            s=p[-1] #on récupère le sommet précédent dans la pile
-            m=False
-            
-            for v in g[m]:
-                if v not in DFS2 :
-                    p.append(v) 
-                    DFS2.add(v)
-                    m=True
-                    break
-            
-            if not m:
-                pile.pop()
-         
-        return DFS2
-    
-    def lien_trajet_dico(t1,d):
-        d2={}
-        for s in t1:
-            d2[s]=d[s]
-        return d2
-    
-    
-    
-    
-                    
-        
-    
-    
-   
-    
-    
+    # initialiser la pile de noeuds à visiter
+    stack = [source]
+
+    # initialiser le dictionnaire de parents et la puissance minimale
+    parents = {source: None}
+    min_power = float(0)
+
+    # parcourir l'arbre couvrant à partir du noeud source
+    while stack:
+        node = stack.pop()
+        if node == destination:
+            # construire le chemin et le renvoyer avec la puissance minimale requise
+            path = [destination]
+            while parents[path[-1]] is not None:
+                path.append(parents[path[-1]])
+            path = path[::-1]
+            for i in range(len(path)-1):
+                for j in g.graph[path[i]]:
+                    if j[0] == path[i+1]:
+                        if j[1] > min_power:
+                            min_power = j[1]
+            return path, min_power
+
+        # parcourir les voisins
+        for neighbor, weight, _ in g.graph[node]:
+            if neighbor not in parents:
+                stack.append(neighbor)
+                parents[neighbor] = node
+
+    # si aucun chemin n'est trouvé, renvoyer None
+    return None, None
+
 
 ####################################################################################################################################################################################
 #                   test
 ####################################################################################################################################################################################
 import time
-g = graph_from_file("input/network.5.in")
+g = graph_from_file("input/network.1.in")
 g = kruskal(g)
-t1 = time.perf_counter()
-g.get_path_with_power(3, 6, 40000)
-t2 = time.perf_counter()
-print(t2-t1)
+print(min_power_for_path(g, 1, 16))
+g.view()
