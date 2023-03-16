@@ -347,43 +347,65 @@ def min_power_for_path(g, source, destination):
     #this lign is not working for now we will fix this in the futur
 
     # initialize the stack of nodes to visit
-    stack = [source]
+    stack = [1]
 
     # initialize parent dictionary and minimum power
-    parents = {source: None}
-    min_power = float(0)
+    dico = dict([(i, [0,0]) for i in g.nodes]) #(parent, profondeur)
+    dico[1] = [None, 0]
 
-    # traverse the spanning tree from the source node
+    verified = {1}
+    # traverse the spanning tree from the source node (DFS)
     while stack:
         node = stack.pop()
-        if node == destination:
-            # construct the path and return it with the minimum power required
-            path = [destination]
-            while parents[path[-1]] is not None:
-                path.append(parents[path[-1]])
-            path = path[::-1]
-            for i in range(len(path)-1):
-                for j in g.graph[path[i]]:
-                    if j[0] == path[i+1]:
-                        if j[1] > min_power:
-                            min_power = j[1]
-            return min_power
-
-        # browse neighbors
-        for neighbor, weight, _ in g.graph[node]:
-            if neighbor not in parents:
+        for neighbor, _, _ in g.graph[node]:
+            if ((dico[neighbor][0] != node) and (dico[neighbor][0] != None) and (neighbor not in verified)):
+                verified.add(neighbor)
                 stack.append(neighbor)
-                parents[neighbor] = node
+                dico[neighbor] = [node, dico[node][1]+1]
+                
 
-    # If no path is found, return none
-    return None
+
+    def find_path(src_, dest_):
+        assert dico[src_][1] == dico[dest_][1]
+        path = []
+        curr1, curr2 = src_, dest_
+        while 1 not in path:
+            path.append(curr1)
+            path.append(curr2)
+            curr1, curr2 = dico[curr1][0], dico[curr2][0]
+        return path
+
+    if dico[source][1] == dico[destination][1]:
+        path = find_path(source, destination)
+    elif dico[source][1]>dico[destination][1]:
+        path_ = []
+        curr = source
+        while dico[curr][1] != dico[destination][1]:
+            path_.append(curr)
+            curr = dico[curr][0]
+        path = path_+find_path(curr, destination)
+    else:
+        path_ = []
+        curr = destination
+        while dico[curr][1] != dico[source][1]:
+            path_.append(curr)
+            curr = dico[curr][0]
+        path = path_+find_path(source, curr)
+
+    min_power = 0
+
+    for i in range(len(path)-1):
+        for j in g.graph[path[i]]:
+            if j[0] in path:
+                if j[1] > min_power:
+                    min_power = j[1]
+    
+    return min_power
 
 
 ####################################################################################################################################################################################
 #                   test (this section is to execute all the functions)
 ####################################################################################################################################################################################
-g = graph_from_file("input/network.1.in")
-g = kruskal(g)
-g_ms = kruskal(g)
-g.view()
-print(min_power_for_path(g, 1, 16))
+#g = graph_from_file("input/network.2.in")
+#g = kruskal(g)
+#print(min_power_for_path(g, 30049, 23458))
