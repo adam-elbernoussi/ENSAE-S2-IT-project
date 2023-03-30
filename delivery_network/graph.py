@@ -402,8 +402,17 @@ def min_power_for_path(g, source, destination):
     
     return min_power
 
+import numpy as np
+def cost_of_a_traject(g, traject, trucks):
+    power_min = min_power_for_path(g, traject[0], traject[1])
+    cost = np.min([a[1] for a in trucks if a[0]>=power_min])
+    return cost
 
-
+def glouton(g, route, trucks):
+    trucks = 
+    g = kruskal(g)
+    cost_list = [cost_of_a_traject(g, traject, trucks) for traject in route]
+    
 
 ####################################################################################################################################################################################
 #                   test (this section is to execute all the functions)
