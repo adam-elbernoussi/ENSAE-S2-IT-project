@@ -413,6 +413,39 @@ def glouton(g, route, trucks):
     g = kruskal(g)
     cost_list = [cost_of_a_traject(g, traject, trucks) for traject in route]
     
+def greedy_solution(trucks, routes):
+    trucks = sorted(trucks, key=lambda t: t.price/t.capacity, reverse=True)
+    routes = sorted(routes, key=lambda r: r.revenue/r.distance, reverse=True)
+
+    total_profit = 0
+    truck_route_assignments = []
+
+    for truck in trucks:
+        for route in routes:
+            if truck.capacity >= route.distance:
+                total_profit += route.revenue - truck.price
+                truck_route_assignments.append((truck.id, route.id))
+                routes.remove(route)
+                break
+
+    return total_profit, truck_route_assignments
+
+def main():
+    for i in range(1, 4):
+        trucks = read_trucks(f"trucks.{i}.in")
+        routes = read_routes(f"routes.{i}.in")
+
+        total_profit, truck_route_assignments = greedy_solution(trucks, routes)
+
+        print(f"Test {i}:")
+        print(f"Total profit: {total_profit}")
+        print("Truck assignments:")
+        for truck_id, route_id in truck_route_assignments:
+            print(f"Truck {truck_id} -> Route {route_id}")
+
+if __name__ == "__main__":
+    main()
+    
 
 ####################################################################################################################################################################################
 #                   test (this section is to execute all the functions)
