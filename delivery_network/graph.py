@@ -1,3 +1,5 @@
+import typing
+
 class Graph:
     """
     A class representing graphs as adjacency lists and implementing various algorithms on the graphs. Graphs in the class are not oriented. 
@@ -409,9 +411,21 @@ def cost_of_a_traject(g, traject, trucks):
     return cost
 
 def glouton(g, route, trucks):
-    trucks = 
+    trucks = 1
     g = kruskal(g)
     cost_list = [cost_of_a_traject(g, traject, trucks) for traject in route]
+
+
+from typing import List, Any
+def route_from_file(filename : Any) -> list[list[int]]:
+    route = []
+    with open(filename, "r") as file:
+        n = list(map(int, file.readline().split()))[0]
+        for _ in range(n):
+            _tmp = list(map(int, file.readline().split()))
+            route.append(_tmp)
+    return route
+
     
 def greedy_knapsack(trucks, min_powers):
     sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
@@ -430,7 +444,8 @@ def greedy_knapsack(trucks, min_powers):
 
     return truck_assignments, total_profit
 
-def assign_trucks_to_routes(graph, routes, trucks):
+def assign_trucks_to_routes(graph, route_file, trucks_file):
+    routes = route_from_file(route_file)
     mst = kruskal(graph)
 
     min_powers = []
@@ -448,6 +463,9 @@ def assign_trucks_to_routes(graph, routes, trucks):
 ####################################################################################################################################################################################
 #                   test (this section is to execute all the functions)
 ####################################################################################################################################################################################
-#g = graph_from_file("input/network.2.in")
+g = graph_from_file("input/network.1.in")
+route = route_from_file("input/routes.1.in")
+print(route)
 #g = kruskal(g)
+#assign_trucks_to_routes(g, )
 #print(min_power_for_path(g, 30049, 23458))
