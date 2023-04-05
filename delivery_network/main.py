@@ -25,7 +25,7 @@ def time_array():
     """
     import time #import the module time
 
-    res = dict([[i, 0] for i in range(1, 3)]) #warning we should put range(1, 11) here
+    res = dict([[i, 0] for i in range(1, 3)]) # type: ignore #warning we should put range(1, 11) here
     for i in res:
         g = graph_from_file("input/network.{}.in".format(i))
         with open("input/routes.{}.in".format(i), "r") as file:

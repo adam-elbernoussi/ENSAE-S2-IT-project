@@ -469,8 +469,23 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
 
     return truck_assignments, total_profit
 
+
 #We will now build an exact method in order to find the exact optimum
 #The name of the method is Branch&Bounds
+import numpy as np
+def branch_and_bounds(graph, route_file, trucks_file):
+    routes = route_from_file(route_file)
+    trucks = truck_from_file(trucks_file)
+    mst = kruskal(graph)
+    budget = 25*(10**9)
+
+    sorted_route = sorted(route, key=lambda x: x[2], reverse=True)
+    for src, dest, _ in sorted_route:
+        min_power = min_power_for_path(mst, src, dest)
+        if budget - sorted([a for a in trucks if a[0]>=min_power], key=lambda x: x[1], reverse = False)[0][1] >=0:
+            
+
+
 
 
 
@@ -481,6 +496,7 @@ g = graph_from_file("input/network.1.in")
 route = route_from_file("input/routes.1.in")
 truck = truck_from_file("input/trucks.1.in")
 g = kruskal(g)
+
 #print(assign_trucks_to_routes(g, "input/routes.1.in", "input/trucks.1.in"))
 #g = kruskal(g)
 #assign_trucks_to_routes(g, )
