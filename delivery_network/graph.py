@@ -469,6 +469,8 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
 
     return truck_assignments, total_profit
 
+#We will now build an exact method in order to find the exact optimum
+#The name of the method is Branch&Bounds
 
 
 
