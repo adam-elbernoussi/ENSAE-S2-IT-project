@@ -413,38 +413,36 @@ def glouton(g, route, trucks):
     g = kruskal(g)
     cost_list = [cost_of_a_traject(g, traject, trucks) for traject in route]
     
-def greedy_solution(trucks, routes):
-    trucks = sorted(trucks, key=lambda t: t.price/t.capacity, reverse=True)
-    routes = sorted(routes, key=lambda r: r.revenue/r.distance, reverse=True)
+def greedy_knapsack(trucks, min_powers):
+    sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
+    sorted_trucks = sorted(trucks, key=lambda x: x[1], reverse=True)
 
+    truck_assignments = []
     total_profit = 0
-    truck_route_assignments = []
 
-    for truck in trucks:
-        for route in routes:
-            if truck.capacity >= route.distance:
-                total_profit += route.revenue - truck.price
-                truck_route_assignments.append((truck.id, route.id))
-                routes.remove(route)
+    for src, dest, profit, min_power in sorted_min_powers:
+        for idx, truck in enumerate(sorted_trucks):
+            if truck[1] >= min_power:
+                truck_assignments.append((truck, (src, dest)))
+                total_profit += profit
+                sorted_trucks.pop(idx)
                 break
 
-    return total_profit, truck_route_assignments
+    return truck_assignments, total_profit
 
-def main():
-    for i in range(1, 4):
-        trucks = read_trucks(f"trucks.{i}.in")
-        routes = read_routes(f"routes.{i}.in")
+def assign_trucks_to_routes(graph, routes, trucks):
+    mst = kruskal(graph)
 
-        total_profit, truck_route_assignments = greedy_solution(trucks, routes)
+    min_powers = []
+    for src, dest, profit in routes:
+        min_power = min_power_for_path(mst, src, dest)
+        min_powers.append((src, dest, profit, min_power))
 
-        print(f"Test {i}:")
-        print(f"Total profit: {total_profit}")
-        print("Truck assignments:")
-        for truck_id, route_id in truck_route_assignments:
-            print(f"Truck {truck_id} -> Route {route_id}")
+    truck_assignments, total_profit = greedy_knapsack(trucks, min_powers)
 
-if __name__ == "__main__":
-    main()
+    return truck_assignments, total_profit
+
+
     
 
 ####################################################################################################################################################################################
