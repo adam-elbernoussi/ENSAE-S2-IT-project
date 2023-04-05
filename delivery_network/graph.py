@@ -353,7 +353,7 @@ def min_power_for_path(g, source, destination):
 
     # initialize parent dictionary and minimum power
     dico = dict([(i, [0,0]) for i in g.nodes]) #(parent, profondeur)
-    dico[1] = [None, 0]
+    dico[1] = [None, 0] # type: ignore
 
     verified = {1}
     # traverse the spanning tree from the source node (DFS)
