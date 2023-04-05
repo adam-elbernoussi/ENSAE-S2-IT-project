@@ -480,7 +480,7 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
 g = graph_from_file("input/network.1.in")
 route = route_from_file("input/routes.1.in")
 truck = truck_from_file("input/trucks.1.in")
-
+g = kruskal(g)
 #print(assign_trucks_to_routes(g, "input/routes.1.in", "input/trucks.1.in"))
 #g = kruskal(g)
 #assign_trucks_to_routes(g, )
