@@ -426,6 +426,16 @@ def route_from_file(filename : Any) -> list[list[int]]:
             route.append(_tmp)
     return route
 
+
+def truck_from_file(filename : Any) -> list[list[int]]:
+    truck = []
+    with open(filename, "r") as file:
+        n = list(map(int, file.readline().split()))[0]
+        for _ in range(n):
+            _tmp = list(map(int, file.readline().split()))
+            truck.append(_tmp)
+    return truck
+
     
 def greedy_knapsack(trucks, min_powers):
     sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
@@ -458,7 +468,7 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
     return truck_assignments, total_profit
 
 
-    
+
 
 ####################################################################################################################################################################################
 #                   test (this section is to execute all the functions)
