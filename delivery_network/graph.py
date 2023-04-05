@@ -475,7 +475,7 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
 
 
 ####################################################################################################################################################################################
-#                   test (this section is to execute all the functions)
+##                   test (this section is to execute all the functions)
 ####################################################################################################################################################################################
 g = graph_from_file("input/network.1.in")
 route = route_from_file("input/routes.1.in")
