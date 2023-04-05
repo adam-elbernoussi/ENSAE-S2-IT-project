@@ -416,8 +416,8 @@ def glouton(g, route, trucks):
     cost_list = [cost_of_a_traject(g, traject, trucks) for traject in route]
 
 
-
-def route_from_file(filename) -> list[list[int]]:
+from typing import Any, List
+def route_from_file(filename) -> List[List[int]]:
     route = []
     with open(filename, "r") as file:
         n = list(map(int, file.readline().split()))[0]
@@ -427,7 +427,7 @@ def route_from_file(filename) -> list[list[int]]:
     return route
 
 
-def truck_from_file(filename) -> list[list[int]]:
+def truck_from_file(filename) -> List[List[int]]:
     truck = []
     with open(filename, "r") as file:
         n = list(map(int, file.readline().split()))[0]
@@ -456,6 +456,7 @@ def greedy_knapsack(trucks, min_powers):
 
 def assign_trucks_to_routes(graph, route_file, trucks_file):
     routes = route_from_file(route_file)
+    trucks = truck_from_file(trucks_file)
     mst = kruskal(graph)
 
     min_powers = []
@@ -475,9 +476,9 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
 ####################################################################################################################################################################################
 g = graph_from_file("input/network.1.in")
 route = route_from_file("input/routes.1.in")
-truck = truck_from_file("input/trucks.0.in")
-print(route)
-print(truck)
+truck = truck_from_file("input/trucks.1.in")
+#print(assign_trucks_to_routes(g, "input/routes.0.in", "input/trucks.0.in"))
 #g = kruskal(g)
 #assign_trucks_to_routes(g, )
 #print(min_power_for_path(g, 30049, 23458))
+#g.view()
