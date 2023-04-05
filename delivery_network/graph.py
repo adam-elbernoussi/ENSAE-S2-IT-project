@@ -217,7 +217,7 @@ class Graph:
 
                         #the following if is to avoid colorizing the edge between Node1 and Node2
                         #if the path is [Node1, ..., Node2]
-                        if (i == path[0]) and (j[0]== path[-1]) and (len(path) != 2):
+                        if (i == path[0]) and (j[0]== path[-1]) and (len(path) != 2): # type: ignore
                             #implementing in BLACK the edge between path[0] and path[-1]
                             #avoiding the case where the path is [node1, node2]
                             dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
