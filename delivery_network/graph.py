@@ -201,20 +201,24 @@ class Graph:
 
         #Initially, we create all the nodes
         for i in self.graph:
-            dot.node('{}'.format(i))    
+            dot.node('{}'.format(i))   
+
+        cpt = 0
 
         if ((node1 != None) and (node2 != None)): #then we have to print the grap and the path
             path, _ = self.min_power(node1, node2)
             for i in self.graph:
-
+                
                 #we will colorize the path's nodes in red
                 if i in path:
                     dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
+                    cpt = path.index(i)+1
+                    cpt = np.min([cpt, len(path)-1])
+                    print(cpt)
                 
                 for j in self.graph[i]: #check all the i's neighbors
                     #now, we implement the edges
-                    if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] in path):
-
+                    if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] == path[cpt]):
                         #the following if is to avoid colorizing the edge between Node1 and Node2
                         #if the path is [Node1, ..., Node2]
                         if (i == path[0]) and (j[0]== path[-1]) and (len(path) != 2): # type: ignore
@@ -227,12 +231,15 @@ class Graph:
                             dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]), color = 'red')
                             verified_edge.append({i, j[0]})
 
-                    #implementing all the other edges of the graph
-                    elif {i, j[0]} not in verified_edge:
+            #implementing all the other edges of the graph
+            for i in self.graph:
+                for j in self.graph[i]:
+                    if {i, j[0]} not in verified_edge:
                         dot.edge('{}'.format(i), '{}'.format(j[0]), weight = "{}".format(j[1]), label = "weight = {}\n length = {}".format(j[1], j[2]))
                         verified_edge.append({i, j[0]})
 
             dot.render(directory='graph_viz_output', view=True) #this is to print the graph
+
 
         else: #then we have to simply print the graph
             for i in self.graph:
@@ -490,21 +497,20 @@ def greedy_knapsack_2(trucks, min_powers):
 
 
 #We will now build an exact method in order to find the exact optimum
-#The name of the method is Branch&Bounds
+# The name of the method is Branch&Bounds
 import numpy as np
-def branch_and_bounds(graph: Graph, route_file, trucks_file):
-    routes = route_from_file(route_file)
-    trucks = truck_from_file(trucks_file)
-    mst = kruskal(graph)
-    budget = 25*(10**9)
-    max_profit = 0
-    queue = [[0, 0, 0]]
-    sorted_route = sorted(routes, key=lambda x: x[2], reverse=True)
+# def branch_and_bounds(graph: Graph, route_file, trucks_file):
+#     routes = route_from_file(route_file)
+#     trucks = truck_from_file(trucks_file)
+#     mst = kruskal(graph)
+#     budget = 25*(10**9)
+#     max_profit = 0
+#     queue = [[0, 0, 0]]
+#     sorted_route = sorted(routes, key=lambda x: x[2], reverse=True)
 
-    while queue:
-        _tmp = queue.pop()
-        profit_next_node = sorted_route[0][2]
-
+#     while queue:
+#         _tmp = queue.pop()
+#         profit_next_node = sorted_route[0][2]
 
     #sorted_route = sorted(routes, key=lambda x: x[2], reverse=True)
     #for src, dest, _ in sorted_route:
@@ -523,16 +529,19 @@ def branch_and_bounds(graph: Graph, route_file, trucks_file):
 
 
 
+
+
 ####################################################################################################################################################################################
 ##                   test (this section is to execute all the functions)
 ####################################################################################################################################################################################
 g = graph_from_file("input/network.1.in")
 route = route_from_file("input/routes.1.in")
 truck = truck_from_file("input/trucks.1.in")
-g = kruskal(g)
+#g = kruskal(g)
 
-print(assign_trucks_to_routes(g, "input/routes.1.in", "input/trucks.2.in"))
+#print(assign_trucks_to_routes(g, "input/routes.1.in", "input/trucks.2.in"))
 #g = kruskal(g)
 #assign_trucks_to_routes(g, )
 #print(min_power_for_path(g, 30049, 23458))
-g.view()
+print(g.min_power(20, 19))
+g.view(20, 19)
