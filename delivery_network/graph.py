@@ -483,8 +483,11 @@ def branch_and_bounds(graph, route_file, trucks_file):
     for src, dest, _ in sorted_route:
         min_power = min_power_for_path(mst, src, dest)
         if budget - sorted([a for a in trucks if a[0]>=min_power], key=lambda x: x[1], reverse = False)[0][1] >=0:
-            
-
+            pass #to finish
+        #en gros ici deux choix : mettre le trajet ou ne pas le mettre
+        #et si pas le budget bah un seul choix
+        #il faudrait réfléchir à une fonction réccursive..
+    raise NotImplemented
 
 
 
