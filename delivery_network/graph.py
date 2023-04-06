@@ -511,7 +511,7 @@ def bound(node, n, W, items):
 
     # keep adding items until weight limit is reached or all items are added
     while j < n and node[1] + items[j][0] <= W:
-        node = (j, node[1] + items[j][0], node[2] + items[j][1], node[3])
+        node = [j, node[1] + items[j][0], node[2] + items[j][1], node[3]]
         profit_bound += items[j][1]
         j += 1
 
