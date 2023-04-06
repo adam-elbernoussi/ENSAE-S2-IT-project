@@ -465,7 +465,26 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
         min_power = min_power_for_path(mst, src, dest)
         min_powers.append((src, dest, profit, min_power))
 
-    truck_assignments, total_profit = greedy_knapsack(trucks, min_powers)
+    truck_assignments, total_profit = greedy_knapsack_2(trucks, min_powers)
+
+    return truck_assignments, total_profit
+
+def greedy_knapsack_2(trucks, min_powers):
+    sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
+    sorted_trucks = sorted(trucks, key=lambda x: x[1], reverse=True)
+    Bu = 25e9
+
+    truck_assignments = []
+    total_profit = 0
+
+    for src, dest, profit, min_power in sorted_min_powers:
+        for idx, truck in enumerate(sorted_trucks):
+            if (truck[0] >= min_power) and (Bu - truck[1]>=0):
+                Bu -= truck[1]
+                truck_assignments.append((truck, (src, dest)))
+                total_profit += profit
+                sorted_trucks.pop(idx)
+                break
 
     return truck_assignments, total_profit
 
@@ -473,21 +492,33 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
 #We will now build an exact method in order to find the exact optimum
 #The name of the method is Branch&Bounds
 import numpy as np
-def branch_and_bounds(graph, route_file, trucks_file):
+def branch_and_bounds(graph: Graph, route_file, trucks_file):
     routes = route_from_file(route_file)
     trucks = truck_from_file(trucks_file)
     mst = kruskal(graph)
     budget = 25*(10**9)
+    max_profit = 0
+    queue = [[0, 0, 0]]
+    sorted_route = sorted(routes, key=lambda x: x[2], reverse=True)
 
-    sorted_route = sorted(route, key=lambda x: x[2], reverse=True)
-    for src, dest, _ in sorted_route:
-        min_power = min_power_for_path(mst, src, dest)
-        if budget - sorted([a for a in trucks if a[0]>=min_power], key=lambda x: x[1], reverse = False)[0][1] >=0:
-            pass #to finish
+    while queue:
+        _tmp = queue.pop()
+        profit_next_node = sorted_route[0][2]
+
+
+    #sorted_route = sorted(routes, key=lambda x: x[2], reverse=True)
+    #for src, dest, _ in sorted_route:
+    #    min_power = min_power_for_path(mst, src, dest)
+    #    if budget - sorted([a for a in trucks if a[0]>=min_power], key=lambda x: x[1], reverse = False)[0][1] >=0:
+    #        pass
+            
+
+
+
+
         #en gros ici deux choix : mettre le trajet ou ne pas le mettre
         #et si pas le budget bah un seul choix
         #il faudrait réfléchir à une fonction réccursive..
-    raise NotImplemented
 
 
 
@@ -500,7 +531,7 @@ route = route_from_file("input/routes.1.in")
 truck = truck_from_file("input/trucks.1.in")
 g = kruskal(g)
 
-#print(assign_trucks_to_routes(g, "input/routes.1.in", "input/trucks.1.in"))
+print(assign_trucks_to_routes(g, "input/routes.1.in", "input/trucks.2.in"))
 #g = kruskal(g)
 #assign_trucks_to_routes(g, )
 #print(min_power_for_path(g, 30049, 23458))
