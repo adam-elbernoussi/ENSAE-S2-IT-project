@@ -21,22 +21,8 @@ graph "Graph" {
 	18
 	19
 	20
-	1 [color=red fontcolor=red]
 	1 -- 2 [label="weight = 2
- length = 6312" color=red weight=2]
-	2 [color=red fontcolor=red]
-	2 -- 13 [label="weight = 8
- length = 7816" color=red weight=8]
-	8 [color=red fontcolor=red]
-	8 -- 1 [label="weight = 13
- length = 5452" color=red weight=13]
-	13 [color=red fontcolor=red]
-	13 -- 19 [label="weight = 1
- length = 5082" color=red weight=1]
-	19 [color=red fontcolor=red]
-	20 [color=red fontcolor=red]
-	20 -- 8 [label="weight = 11
- length = 3351" color=red weight=11]
+ length = 6312" weight=2]
 	1 -- 19 [label="weight = 74
  length = 4105" weight=74]
 	1 -- 13 [label="weight = 37
@@ -55,12 +41,16 @@ graph "Graph" {
  length = 1495" weight=66]
 	1 -- 20 [label="weight = 35
  length = 5244" weight=35]
+	1 -- 8 [label="weight = 13
+ length = 5452" weight=13]
 	2 -- 3 [label="weight = 5
  length = 6891" weight=5]
 	2 -- 4 [label="weight = 52
  length = 664" weight=52]
 	2 -- 12 [label="weight = 76
  length = 9559" weight=76]
+	2 -- 13 [label="weight = 8
+ length = 7816" weight=8]
 	2 -- 15 [label="weight = 74
  length = 5329" weight=74]
 	2 -- 16 [label="weight = 87
@@ -143,6 +133,8 @@ graph "Graph" {
  length = 4970" weight=53]
 	8 -- 11 [label="weight = 40
  length = 5867" weight=40]
+	8 -- 20 [label="weight = 11
+ length = 3351" weight=11]
 	9 -- 18 [label="weight = 90
  length = 1554" weight=90]
 	9 -- 12 [label="weight = 12
@@ -177,6 +169,8 @@ graph "Graph" {
  length = 6307" weight=37]
 	13 -- 14 [label="weight = 54
  length = 8269" weight=54]
+	13 -- 19 [label="weight = 1
+ length = 5082" weight=1]
 	13 -- 16 [label="weight = 90
  length = 3910" weight=90]
 	13 -- 20 [label="weight = 40

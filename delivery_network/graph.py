@@ -212,7 +212,7 @@ class Graph:
                 #we will colorize the path's nodes in red
                 if i in path:
                     dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
-                    cpt = path.index(i)+1
+                    cpt = path.index(i)+1 
                     cpt = np.min([cpt, len(path)-1])
                     print(cpt)
                 
@@ -526,6 +526,35 @@ import numpy as np
         #et si pas le budget bah un seul choix
         #il faudrait réfléchir à une fonction réccursive..
 
+        #u = [node, poids, profit]
+        #camtard = [puissance, cout]
+
+def bound(g, node, n, budget, summary_of_pb):
+
+    if node[1] >= budget:
+        return 0
+    
+    profit_bound = node[2]
+
+    j = node[0]
+    cost_tot = node[1]
+
+    while ((j<n) and (cost_tot + summary_of_pb[j][1] <= budget)):
+        cost_tot += summary_of_pb[j][1]
+        profit_bound += summary_of_pb[j][0]
+        j += 1
+    
+    if (j<n):
+        profit_bound += (budget - cost_tot)*summary_of_pb[j][0]/summary_of_pb[j][1]
+    
+    return profit_bound
+
+def knapsack(budget, summary_of_pb):
+    pass
+
+def wrapper():
+    pass
+
 
 
 
@@ -544,4 +573,4 @@ truck = truck_from_file("input/trucks.1.in")
 #assign_trucks_to_routes(g, )
 #print(min_power_for_path(g, 30049, 23458))
 print(g.min_power(20, 19))
-g.view(20, 19)
+g.view()
