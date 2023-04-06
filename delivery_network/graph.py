@@ -525,7 +525,7 @@ import numpy as np
         #et si pas le budget bah un seul choix
         #il faudrait réfléchir à une fonction réccursive..
 
-        #node = [level, cout, profit]
+        #node = [level, cout, profit, bound]
         #camtard = [puissance, cout]
 
         #summary : [cout, utilité]
@@ -537,58 +537,157 @@ def bound(node, n, budget, summary_of_pb):
     
     profit_bound = node[2]
 
-    j = node[0]
+    j = node[0] + 1
     cost_tot = node[1]
 
-    while ((j<n) and (cost_tot + summary_of_pb[j][1] <= budget)):
-        cost_tot += summary_of_pb[j][1]
-        profit_bound += summary_of_pb[j][0]
+    while ((j<n) and (cost_tot + summary_of_pb[j][0] <= budget)):
+        cost_tot += summary_of_pb[j][0]
+        profit_bound += summary_of_pb[j][1]
         j += 1
     
     if (j<n):
-        profit_bound += (budget - cost_tot)*summary_of_pb[j][0]/summary_of_pb[j][1]
+        profit_bound += (budget - cost_tot)*summary_of_pb[j][1]/summary_of_pb[j][0]
     
     return profit_bound
 
-def knapsack(budget, summary_of_pb, n):
-    sorted_value_per_unit = sorted(summary_of_pb, key=lambda x: x[1]/x[0], reverse = False)
+def bound_2(node, n, W, items):
+    if node[1] > W:
+        return 0
+
+    # initialize profit bound to profit of current node
+    profit_bound = node[2]
+
+    # start from the next item index
+    j = node[0] + 1
+
+    # keep adding items until weight limit is reached or all items are added
+    while j < n and node[1] + items[j][0] <= W:
+        node = (j, node[1] + items[j][0], node[2] + items[j][1], node[3])
+        profit_bound += items[j][1]
+        j += 1
+
+    # if not all items are added, calculate the fractional profit of the next item
+    if j < n:
+        # calculate the remaining weight
+        remaining_weight = W - node[1]
+        # add the fraction of profit based on the remaining weight and the next item's value-to-weight ratio
+        profit_bound += remaining_weight * items[j][1] / items[j][0]
+
+    return profit_bound
+
+
+def knapsack(budget, summary_of_pb):
+    n = len(summary_of_pb)
+    summary_of_pb = sorted(summary_of_pb, key=lambda x: x[1]/x[0], reverse = True)
+    print(summary_of_pb)
     queue = []
 
-    node = [-1, 0, 0]
+    node = [-1, 0, 0, 0]
     queue.append(node)
 
     max_profit = 0
 
     while queue:
-        node = queue.pop()
-        node2 = [0, 0, 0]
+        node = queue.pop(0)
+        node2 = [0, 0, 0, 0]
 
-        if node[1] == -1:
-            node2[0] = 1
-        elif node[1] == n-1:
+        if node[0] == -1:
+            node2[0] = 0
+        elif node[0] == n-1:
             continue
         else:
-            node2[1] = node[1]+1
-
-        node2[2] = node[2] + summary_of_pb[node2[1]][0]
-        node2[3] = node[3] + summary_of_pb[node2[1]][1]
+            node2[0] = node[0]+1
         
-        if (node2[2] <= budget) and (node2[3]> max_profit):
-            max_profit = node2[3]
+        node2[1] = node[1] + summary_of_pb[node2[0]][0]
+        node2[2] = node[2] + summary_of_pb[node2[0]][1]
 
-        node2_bound = bound(node2, n, budget, summary_of_pb)
+        print(node2)
+        
+        if (node2[1] <= budget) and (node2[2]> max_profit):
+            max_profit = node2[2]
+
+        node2_bound = bound_2(node2, n, budget, summary_of_pb)
+        #print(node2_bound)
 
         if node2_bound > max_profit:
+            node2[3] = node2_bound
             queue.append(node2)
 
-        node2[2] = node[2]
-        node2[3] = node[3]
 
-        node2_bound = bound(node2, n, budget, summary_of_pb)
+        print(node2)
+        node2[0] = node[0]+1
+        node2[1] = node[1]
+        node2[2] = node[2]
+        node2[3] = 0
+        node2_bound = bound_2([node[0]+1, node[1], node[2], 0], n, budget, summary_of_pb)
+        node2[3] = node2_bound
         if node2_bound > max_profit:
             queue.append(node2)
 
     return max_profit
+
+
+def knapsack_bnb(W, items):
+    n = len(items)
+    items = sorted(items, key=lambda x: x[1] / x[0], reverse=True)
+    queue = []
+    print(items)
+
+    node = (-1, 0, 0, 0)
+    queue.append(node)
+
+    max_profit = 0
+
+    while queue:
+        u = queue.pop(0)
+        v = [0, 0, 0, 0]
+
+        if u[0] == -1:
+            v = [0, 0, 0, 0]
+            #v_level = 0
+        elif u[0] == n-1:
+            continue
+        else:
+            v[0] = u[0] + 1
+
+        
+        v = [v[0], u[1] + items[v[0]][0], u[2] + items[v[0]][1], 0]
+        #print(v)
+
+        if v[1] <= W and v[2] > max_profit:
+            max_profit = v[2]
+
+        v_bound = bound_2(v, n, W, items)
+
+        if v_bound > max_profit:
+            v = (v[0], v[1], v[2], v_bound)
+            queue.append(v)
+
+        print(v)
+        v = (u[0] + 1, u[1], u[2], bound_2((u[0] + 1, u[1], u[2], 0), n, W, items))
+        if v[3] > max_profit:
+            queue.append(v)
+
+    return max_profit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def wrapper(graph: Graph, route_file, trucks_file):
 
@@ -597,15 +696,16 @@ def wrapper(graph: Graph, route_file, trucks_file):
     routes = route_from_file(route_file)
     trucks = truck_from_file(trucks_file)
 
-    budget = 25e9
+    budget = 25*(10**9)
     summary_of_pb = []
     for road in routes:
         power_min = min_power_for_path(g, road[0], road[1])
         summary_of_pb.append([sorted([a for a in trucks if a[0] >= power_min], key=lambda x: x[1], reverse = False)[0][1], road[2]])
     
-    n = int(len(summary_of_pb)/2)
+    n = len(summary_of_pb)
+    #print(summary_of_pb)
 
-    return knapsack(budget, summary_of_pb, n)
+    return knapsack_bnb(budget, summary_of_pb)
 
 
 
@@ -613,15 +713,15 @@ def wrapper(graph: Graph, route_file, trucks_file):
 ####################################################################################################################################################################################
 ##                   test (this section is to execute all the functions)
 ####################################################################################################################################################################################
-g = graph_from_file("input/network.01.in")
+g = graph_from_file("input/network.1.in")
 route = route_from_file("input/routes.1.in")
-truck = truck_from_file("input/trucks.1.in")
+truck = truck_from_file("input/trucks.0.in")
 #g = kruskal(g)
 
-#print(assign_trucks_to_routes(g, "input/routes.1.in", "input/trucks.2.in"))
+#print(assign_trucks_to_routes(g, "input/routes.1_2.in", "input/trucks.0.in"))
 #g = kruskal(g)
 #assign_trucks_to_routes(g, )
-#print(min_power_for_path(g, 30049, 23458))
+#print(min_power_for_path(g, 5, 4))
 #print(g.min_power(20, 19))
-#print(wrapper(g, "input/routes.1.in", "input/trucks.1.in"))
-g.view()
+print(wrapper(g, "input/routes.1_2.in", "input/trucks.0.in"))
+#g.view()
