@@ -212,13 +212,12 @@ class Graph:
                 #we will colorize the path's nodes in red
                 if i in path:
                     dot.node('{}'.format(i), color = 'red', fontcolor = 'red')
-                    cpt = path.index(i)+1 
-                    cpt = np.min([cpt, len(path)-1])
-                    print(cpt)
+                    cpt = path.index(i)+1 # type: ignore
+                    cpt = np.min([cpt, len(path)-1]) # type: ignore
                 
                 for j in self.graph[i]: #check all the i's neighbors
                     #now, we implement the edges
-                    if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] == path[cpt]):
+                    if ({i, j[0]} not in verified_edge) and (i in path) and (j[0] == path[cpt]): # type: ignore
                         #the following if is to avoid colorizing the edge between Node1 and Node2
                         #if the path is [Node1, ..., Node2]
                         if (i == path[0]) and (j[0]== path[-1]) and (len(path) != 2): # type: ignore
@@ -526,10 +525,12 @@ import numpy as np
         #et si pas le budget bah un seul choix
         #il faudrait réfléchir à une fonction réccursive..
 
-        #u = [node, poids, profit]
+        #node = [level, cout, profit]
         #camtard = [puissance, cout]
 
-def bound(g, node, n, budget, summary_of_pb):
+        #summary : [cout, utilité]
+
+def bound(node, n, budget, summary_of_pb):
 
     if node[1] >= budget:
         return 0
@@ -549,13 +550,62 @@ def bound(g, node, n, budget, summary_of_pb):
     
     return profit_bound
 
-def knapsack(budget, summary_of_pb):
-    pass
+def knapsack(budget, summary_of_pb, n):
+    sorted_value_per_unit = sorted(summary_of_pb, key=lambda x: x[1]/x[0], reverse = False)
+    queue = []
 
-def wrapper():
-    pass
+    node = [-1, 0, 0]
+    queue.append(node)
 
+    max_profit = 0
 
+    while queue:
+        node = queue.pop()
+        node2 = [0, 0, 0]
+
+        if node[1] == -1:
+            node2[0] = 1
+        elif node[1] == n-1:
+            continue
+        else:
+            node2[1] = node[1]+1
+
+        node2[2] = node[2] + summary_of_pb[node2[1]][0]
+        node2[3] = node[3] + summary_of_pb[node2[1]][1]
+        
+        if (node2[2] <= budget) and (node2[3]> max_profit):
+            max_profit = node2[3]
+
+        node2_bound = bound(node2, n, budget, summary_of_pb)
+
+        if node2_bound > max_profit:
+            queue.append(node2)
+
+        node2[2] = node[2]
+        node2[3] = node[3]
+
+        node2_bound = bound(node2, n, budget, summary_of_pb)
+        if node2_bound > max_profit:
+            queue.append(node2)
+
+    return max_profit
+
+def wrapper(graph: Graph, route_file, trucks_file):
+
+    g = kruskal(graph)
+
+    routes = route_from_file(route_file)
+    trucks = truck_from_file(trucks_file)
+
+    budget = 25e9
+    summary_of_pb = []
+    for road in routes:
+        power_min = min_power_for_path(g, road[0], road[1])
+        summary_of_pb.append([sorted([a for a in trucks if a[0] >= power_min], key=lambda x: x[1], reverse = False)[0][1], road[2]])
+    
+    n = int(len(summary_of_pb)/2)
+
+    return knapsack(budget, summary_of_pb, n)
 
 
 
@@ -563,7 +613,7 @@ def wrapper():
 ####################################################################################################################################################################################
 ##                   test (this section is to execute all the functions)
 ####################################################################################################################################################################################
-g = graph_from_file("input/network.1.in")
+g = graph_from_file("input/network.01.in")
 route = route_from_file("input/routes.1.in")
 truck = truck_from_file("input/trucks.1.in")
 #g = kruskal(g)
@@ -572,5 +622,6 @@ truck = truck_from_file("input/trucks.1.in")
 #g = kruskal(g)
 #assign_trucks_to_routes(g, )
 #print(min_power_for_path(g, 30049, 23458))
-print(g.min_power(20, 19))
+#print(g.min_power(20, 19))
+#print(wrapper(g, "input/routes.1.in", "input/trucks.1.in"))
 g.view()
