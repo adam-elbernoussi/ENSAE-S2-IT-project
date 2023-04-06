@@ -425,6 +425,10 @@ def min_power_for_path(g, source, destination):
 
 from typing import Any, List
 def route_from_file(filename) -> List[List[int]]:
+    """
+    This function transform a text file in a list of road
+    """
+
     route = []
     with open(filename, "r") as file:
         n = list(map(int, file.readline().split()))[0]
@@ -435,6 +439,9 @@ def route_from_file(filename) -> List[List[int]]:
 
 
 def truck_from_file(filename) -> List[List[int]]:
+    """This function transform a text file in a list of truck
+    """
+
     truck = []
     with open(filename, "r") as file:
         n = list(map(int, file.readline().split()))[0]
@@ -443,25 +450,11 @@ def truck_from_file(filename) -> List[List[int]]:
             truck.append(_tmp)
     return truck
 
-    
-def greedy_knapsack(trucks, min_powers):
-    sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
-    sorted_trucks = sorted(trucks, key=lambda x: x[1], reverse=True)
-
-    truck_assignments = []
-    total_profit = 0
-
-    for src, dest, profit, min_power in sorted_min_powers:
-        for idx, truck in enumerate(sorted_trucks):
-            if truck[1] >= min_power:
-                truck_assignments.append((truck, (src, dest)))
-                total_profit += profit
-                sorted_trucks.pop(idx)
-                break
-
-    return truck_assignments, total_profit
 
 def assign_trucks_to_routes(graph, route_file, trucks_file):
+    """This function assign a truck to a road in the optimal (heuristical) solution
+    """
+
     routes = route_from_file(route_file)
     trucks = truck_from_file(trucks_file)
     mst = kruskal(graph)
@@ -471,11 +464,15 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
         min_power = min_power_for_path(mst, src, dest)
         min_powers.append((src, dest, profit, min_power))
 
-    truck_assignments, total_profit = greedy_knapsack_2(trucks, min_powers)
+    truck_assignments, total_profit = greedy_knapsack(trucks, min_powers)
 
     return truck_assignments, total_profit
 
-def greedy_knapsack_2(trucks, min_powers):
+def greedy_knapsack(trucks, min_powers):
+    """
+    This is the implementation of a greedy method in order to solve the knapsack problem
+    (adapted to our subject)"""
+    
     sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
     sorted_trucks = sorted(trucks, key=lambda x: x[1], reverse=True)
     Bu = 25e9
@@ -500,6 +497,9 @@ def greedy_knapsack_2(trucks, min_powers):
 import numpy as np
 
 def bound(node, n, W, items):
+    """
+    This function compute for each node a bound for the further branch.
+    This allows us to dramatically reduce the compute time"""
     if node[1] > W:
         return 0
 
@@ -525,6 +525,11 @@ def bound(node, n, W, items):
     return profit_bound
 
 def knapsack(budget, items):
+    """
+    This is an implementation of the branch and bounds algorithm in order to solve the 
+    knapsack problem (adapted for our problem)
+    """
+
     n = len(items)
     items = sorted(items, key=lambda x: x[1] / x[0], reverse=True)
     queue = []
