@@ -585,7 +585,12 @@ def knapsack(budget, items):
     items : list
         A list of items that we can put in the knapsack : 
         for each road we took the less costly truck that can travel the road
+        An item is each time the utility and the cost
 
+    Outputs:
+    -----------
+    max_profit: Float
+        the highest profit we can get
     """
 
     n = len(items)
@@ -630,6 +635,9 @@ def knapsack(budget, items):
 
 
 def wrapper(graph: Graph, route_file, trucks_file):
+    """
+    This is a wrapp function, no need to explain
+    """
 
     g = kruskal(graph)
 
