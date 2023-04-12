@@ -415,6 +415,16 @@ from typing import Any, List
 def route_from_file(filename) -> List[List[int]]:
     """
     This function transform a text file in a list of road
+
+    Parameters:
+    -----------
+    filename : txt file
+        A text file with a list of road
+
+    Outputs:
+    -----------
+    route : List[List[int]]
+        A list of roads : city1 city2 utility
     """
 
     route = []
@@ -429,6 +439,16 @@ def route_from_file(filename) -> List[List[int]]:
 def truck_from_file(filename) -> List[List[int]]:
     """
     This function transform a text file in a list of truck
+
+    Parameters:
+    -----------
+    filename : txt file
+        A text file with a list of trucks
+
+    Outputs:
+    -----------
+    route : List[List[int]]
+        A list of trucks : power cost
     """
 
     truck = []
@@ -441,7 +461,26 @@ def truck_from_file(filename) -> List[List[int]]:
 
 
 def assign_trucks_to_routes(graph, route_file, trucks_file):
-    """This function assign a truck to a road in the optimal (heuristical) solution
+    """
+    This function assign a truck to a road in the optimal (heuristical) solution
+
+    Parameters:
+    -----------
+    graph : a Graph
+        A graph
+    
+    route_file : txt file
+        A text file with a list of road
+
+    trucks_file : txt file
+        A text file with a list of trucks
+
+    Outputs:
+    -----------
+    truck_assignments : List
+        A list of tuples (truck (= power and cost), road)
+    total_profit : Float
+        A float which is the total of the profit
     """
 
     routes = route_from_file(route_file)
@@ -461,6 +500,22 @@ def greedy_knapsack(trucks, min_powers):
     """
     This is the implementation of a greedy method in order to solve the knapsack problem
     (adapted to our subject)
+
+    Parameters:
+    -----------    
+    trucks : list
+        A list of trucks : power cost
+
+    min_power : List[tuples]
+        A list of tuples with 
+        (city1, city2, profit, minimal power to travel the road)
+
+    Outputs:
+    -----------
+    truck_assignments : List
+        A list of tuples (truck (= power and cost), road)
+    total_profit : Float
+        A float which is the total of profit
     """
     
     sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
@@ -490,6 +545,8 @@ def bound(node, n, W, items):
     """
     This function compute for each node a bound for the further branch.
     This allows us to dramatically reduce the compute time
+
+
     """
     if node[1] > W:
         return 0
@@ -519,6 +576,16 @@ def knapsack(budget, items):
     """
     This is an implementation of the branch and bounds algorithm in order to solve the 
     knapsack problem (adapted for our problem)
+
+    Parameters:
+    -----------
+    budget : float
+        the total budget
+    
+    items : list
+        A list of items that we can put in the knapsack : 
+        for each road we took the less costly truck that can travel the road
+
     """
 
     n = len(items)
