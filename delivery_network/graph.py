@@ -410,18 +410,6 @@ def min_power_for_path(g, source, destination):
     
     return min_power
 
-#######################################################################################
-#import numpy as np
-#def cost_of_a_traject(g, traject, trucks):
-#    power_min = min_power_for_path(g, traject[0], traject[1])
-#    cost = np.min([a[1] for a in trucks if a[0]>=power_min])
-#    return cost
-
-#def glouton(g, route, trucks):
-#    trucks = 1
-#    g = kruskal(g)
-#    cost_list = [cost_of_a_traject(g, traject, trucks) for traject in route]
-#######################################################################################
 
 from typing import Any, List
 def route_from_file(filename) -> List[List[int]]:
@@ -605,5 +593,5 @@ truck = truck_from_file("input/trucks.0.in")
 #assign_trucks_to_routes(g, )
 #print(min_power_for_path(g, 5, 4))
 #print(g.min_power(20, 19))
-print(wrapper(g, "input/routes.1_2.in", "input/trucks.0.in"))
-#g.view()
+#print(wrapper(g, "input/routes.1_2.in", "input/trucks.0.in"))
+g.view(1, 3)
