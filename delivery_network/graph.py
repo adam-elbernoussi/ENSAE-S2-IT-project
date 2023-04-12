@@ -546,7 +546,26 @@ def bound(node, n, W, items):
     This function compute for each node a bound for the further branch.
     This allows us to dramatically reduce the compute time
 
+    Parameters:
+    -----------
+    node : NodeType
+        A node of the graph
+    
+    n : int
+        number of items
+    
+    W : int
+        maximum weight
 
+    items : list
+        A list of items that we can put in the knapsack : 
+        for each road we took the less costly truck that can travel the road
+        An item is each time the utility and the cost
+
+    Outputs:
+    -----------
+    profit_bound: Float
+        the highest profit we can get
     """
     if node[1] > W:
         return 0
@@ -596,7 +615,7 @@ def knapsack(budget, items):
     n = len(items)
     items = sorted(items, key=lambda x: x[1] / x[0], reverse=True)
     queue = []
-    print(items)
+    #print(items)
 
     node = (-1, 0, 0, 0)
     queue.append(node)
