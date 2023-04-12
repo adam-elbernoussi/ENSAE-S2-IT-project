@@ -427,7 +427,8 @@ def route_from_file(filename) -> List[List[int]]:
 
 
 def truck_from_file(filename) -> List[List[int]]:
-    """This function transform a text file in a list of truck
+    """
+    This function transform a text file in a list of truck
     """
 
     truck = []
@@ -459,7 +460,8 @@ def assign_trucks_to_routes(graph, route_file, trucks_file):
 def greedy_knapsack(trucks, min_powers):
     """
     This is the implementation of a greedy method in order to solve the knapsack problem
-    (adapted to our subject)"""
+    (adapted to our subject)
+    """
     
     sorted_min_powers = sorted(min_powers, key=lambda x: x[2] / x[3], reverse=True)
     sorted_trucks = sorted(trucks, key=lambda x: x[1], reverse=True)
@@ -487,7 +489,8 @@ import numpy as np
 def bound(node, n, W, items):
     """
     This function compute for each node a bound for the further branch.
-    This allows us to dramatically reduce the compute time"""
+    This allows us to dramatically reduce the compute time
+    """
     if node[1] > W:
         return 0
 
